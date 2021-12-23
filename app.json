@@ -1,0 +1,30 @@
+{
+    "expo": {
+        "name": "didibom",
+        "slug": "didibom",
+        "privacy": "public",
+        "platforms": [
+            "ios",
+            "android",
+            "web"
+        ],
+        "version": "1.7.1",
+        "orientation": "portrait",
+        "icon": "./assets/imgs/DDBM/ddbm-ico.png",
+        "splash": {
+            "image": "./assets/imgs/DDBM/splash.png",
+            "resizeMode": "cover",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true
+        },
+        "description": "Argon React Native, based on Argon Design System. Coded by Creative Tim"
+    }
+}

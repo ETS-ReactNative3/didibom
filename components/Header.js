@@ -5,7 +5,7 @@ import { Button, Block, NavBar, Text, theme } from 'galio-framework';
 
 import Icon from './Icon';
 import Input from './Input';
-//import Tabs from './Tabs';
+import Tabs from './Tabs';
 import argonTheme from '../constants/Theme';
 
 const { height, width } = Dimensions.get('window');
@@ -120,7 +120,7 @@ class Header extends React.Component {
     );
   }
 
-  /*renderTabs = () => {
+  renderTabs = () => {
     const { tabs, tabIndex, navigation } = this.props;
     const defaultTab = tabs && tabs[0] && tabs[0].id;
     
@@ -132,7 +132,7 @@ class Header extends React.Component {
         initialIndex={tabIndex || defaultTab}
         onChange={id => navigation.setParams({ tabId: id })} />
     )
-  }*/
+  }
   
   renderHeader = () => {
     const { search, options, tabs } = this.props;

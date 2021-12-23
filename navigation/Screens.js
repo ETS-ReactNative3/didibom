@@ -16,6 +16,7 @@ import Register from "../screens/Register";
 import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
 import CommingSoon from "../screens/CommingSoon";
+import Schedule from "../screens/Schedule";
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -29,6 +30,7 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
+/* 
 function ElementsStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -80,6 +82,60 @@ function ElementsStack(props) {
     
   );
 }
+*/
+
+function ScheduleStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Elements"
+        component={Schedule}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Agendamento" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+            <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="CommingSoon"
+        component={CommingSoon}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+    
+  );
+}
+
 
 function ArticlesStack(props) {
   return (
@@ -296,7 +352,7 @@ function AppStack(props) {
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Perfil" component={PerfilStack} />
       <Drawer.Screen name="Conta" component={Register} />
-      <Drawer.Screen name="Elements" component={ElementsStack} />
+      <Drawer.Screen name="Schedule" component={ScheduleStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
     </Drawer.Navigator>
   );

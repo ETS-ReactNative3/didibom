@@ -5,94 +5,106 @@ import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
 import { argonTheme, tabs } from "../constants";
 import { Button, Select, Icon, Input, Header, Switch, Card } from "../components";
+import articles from '../constants/articles';
 
 const { width } = Dimensions.get("screen");
 
+
+
 class Schedule extends React.Component {
+
   state = {
+    price: 0,
+    /*
     "switch-1": true,
     "switch-2": false
+     */
   };
+
+  updatePrice = (price) => {
+    this.setState({ price: price })
+  }
+
+
 
   toggleSwitch = switchId =>
     this.setState({ [switchId]: !this.state[switchId] });
 
   renderButtons = () => {
+
+    const { navigation } = this.props;
+    //const meuItem = route.params;
+    //console.log(meuItem)
     return (
       <Block flex>
-        <Text bold size={16} style={styles.title}>
-          Buttons
-        </Text>
+
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-        
-          <Block center>
-            <Button color="default" style={styles.button}>
-              DEFAULT
-            </Button>
-          </Block>
-          <Block center>
-            <Button
-              color="secondary"
-              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-              style={styles.button}
-            >
-              SECONDARY
-            </Button>
-          </Block>
-          <Block center>
-            <Button style={styles.button}>PRIMARY</Button>
-          </Block>
-          <Block center>
-            <Button color="info" style={styles.button}>
-              INFO
-            </Button>
-          </Block>
-          <Block center>
-            <Button color="success" style={styles.button}>
-              SUCCESS
-            </Button>
-          </Block>
-          <Block center>
-            <Button color="warning" style={styles.button}>
-              WARNING
-            </Button>
-          </Block>
-          <Block center>
-            <Button color="error" style={styles.button}>
-              ERROR
-            </Button>
-          
-          </Block>
-          <Block row space="evenly">
-            <Block flex left style={{marginTop: 8}}>
-              <Select
-                defaultIndex={1}
-                options={["01", "02", "03", "04", "05"]}
-              />
-            </Block>
-            <Block flex center>
-              <Button small center color="default" style={styles.optionsButton}>
-                DELETE
-              </Button>
-            </Block>
-            <Block flex={1.25} right>
-              <Button center color="default" style={styles.optionsButton}>
-                SAVE FOR LATER
-              </Button>
-            </Block>
-          </Block>
-        
+          <Card item={articles[1]} full />
+
         </Block>
+        <Block row space="evenly"
+          style={{ flex: 1, flexDirection: 'row' }}
+        >
+          <Block flex right style={{ marginTop: 8, }}>
+            <Text
+              style={{ marginRight: 40, marginBottom: theme.SIZES.BASE / 2 }}
+              color={argonTheme.COLORS.DEFAULT}
+            >
+              Pessoas
+            </Text>
+
+            <Select
+              style={{ paddingTop: 14, paddingBottom: 14, backgroundColor: argonTheme.COLORS.ICON }}
+              defaultIndex={1}
+              options={["01", "02", "03", "04", "05", "06"]}
+              onValueChange = {console.log(5)}
+
+            >
+            </Select>
+          </Block>
+
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 27 }}>
+            <Input
+              placeholder="DD MM HH:MM"
+              iconContent={
+                <Icon
+                  size={11}
+                  style={{ marginRight: 10 }}
+                  color={argonTheme.COLORS.ICON}
+                  name="calendar-date"
+                  family="ArgonExtra"
+                />
+              }
+            />
+          </Block>
+
+
+        </Block>
+        <Text
+            style={{ marginLeft: 40, marginBottom: theme.SIZES.BASE / 2 }}
+            color={argonTheme.COLORS.DEFAULT}
+          >
+            Price: {this.state.price}
+          </Text>
+        <Block center>
+          <Button color="default" style={styles.button}>
+            CONCLUIR AGENDAMENTO
+          </Button>
+        </Block>
+
       </Block>
+
     );
   };
 
   renderText = () => {
     return (
       <Block flex style={styles.group}>
+        {/*
         <Text bold size={16} style={styles.title}>
           Typography
         </Text>
+
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Text
             h1
@@ -138,111 +150,14 @@ class Schedule extends React.Component {
           </Text>
           <Text muted>This is a muted paragraph.</Text>
         </Block>
+                 */
+        }
       </Block>
     );
   };
 
   renderInputs = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Inputs
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input right placeholder="Regular" iconContent={<Block />} />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            right
-            placeholder="Regular Custom"
-            style={{
-              borderColor: argonTheme.COLORS.INFO,
-              borderRadius: 4,
-              backgroundColor: "#fff"
-            }}
-            iconContent={<Block />}
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            placeholder="Icon left"
-            iconContent={
-              <Icon
-                size={11}
-                style={{ marginRight: 10 }}
-                color={argonTheme.COLORS.ICON}
-                name="search-zoom-in"
-                family="ArgonExtra"
-              />
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            right
-            placeholder="Icon Right"
-            iconContent={
-              <Icon
-                size={11}
-                color={argonTheme.COLORS.ICON}
-                name="search-zoom-in"
-                family="ArgonExtra"
-              />
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            success
-            right
-            placeholder="Success"
-            iconContent={
-              <Block
-                middle
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  backgroundColor: argonTheme.COLORS.INPUT_SUCCESS
-                }}
-              >
-                <Icon
-                  size={11}
-                  color={argonTheme.COLORS.ICON}
-                  name="g-check"
-                  family="ArgonExtra"
-                />
-              </Block>
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            error
-            right
-            placeholder="Error Input"
-            iconContent={
-              <Block
-                middle
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  backgroundColor: argonTheme.COLORS.INPUT_ERROR
-                }}
-              >
-                <Icon
-                  size={11}
-                  color={argonTheme.COLORS.ICON}
-                  name="support"
-                  family="ArgonExtra"
-                />
-              </Block>
-            }
-          />
-        </Block>
-      </Block>
-    );
+    return;
   };
 
   renderSwitches = () => {
@@ -277,28 +192,8 @@ class Schedule extends React.Component {
   };
 
   renderTableCell = () => {
-    const { navigation } = this.props;
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Table Cell
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block style={styles.rows}>
-            <TouchableOpacity onPress={() => navigation.navigate("Pro")}>
-              <Block row middle space="between" style={{ paddingTop: 7 }}>
-                <Text size={14}>Manage Options</Text>
-                <Icon
-                  name="chevron-right"
-                  family="entypo"
-                  style={{ paddingRight: 5 }}
-                />
-              </Block>
-            </TouchableOpacity>
-          </Block>
-        </Block>
-      </Block>
-    );
+    const { routes, navigation } = this.props;
+    return;
   };
 
   renderSocial = () => {
@@ -355,41 +250,7 @@ class Schedule extends React.Component {
   };
 
   renderNavigation = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Navigation
-        </Text>
-        <Block>
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header white back title="Title" navigation={this.props.navigation} bgColor={argonTheme.COLORS.ACTIVE} titleColor="white" iconColor="white" />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header search title="Title" navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header tabs={tabs.categories} search title="Title" navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header
-              options
-              search
-              title="Title"
-              optionLeft="Option 1"
-              optionRight="Option 2"
-              navigation={this.props.navigation}
-            />
-          </Block>
-        </Block>
-      </Block>
-    );
+    return;
   };
 
   render() {
@@ -400,7 +261,7 @@ class Schedule extends React.Component {
           {this.renderText()}
           {this.renderInputs()}
           {this.renderSocial()}
-          {this.renderSwitches()}
+          {/*this.renderSwitches()*/}
           {this.renderNavigation()}
           {this.renderTableCell()}
         </ScrollView>

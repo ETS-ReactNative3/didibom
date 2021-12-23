@@ -31,7 +31,7 @@ export default class CommingSoon extends React.Component {
                 shadowless
                 style={styles.button}
                 color={argonTheme.COLORS.BLACK}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate('Home')}
                 /*onPress={() => Linking.openURL('https://www.creative-tim.com/product/argon-pro-react-native').catch((err) => console.error('An error occurred', err))}*/>
                 <Text bold color={theme.COLORS.WHITE}>Voltar</Text>
               </Button>

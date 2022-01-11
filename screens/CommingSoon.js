@@ -1,5 +1,6 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
+import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, Linking } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 

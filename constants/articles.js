@@ -26,4 +26,78 @@ export default [
     cta: 'Conhecer', 
     horizontal: true
   },
+  {
+    title: 'Carolina Amanda',
+    image: 'https://images.pexels.com/photos/7263227/pexels-photo-7263227.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+  {
+    title: 'Andrea Picaso',
+    image: 'https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+  {
+    title: 'Seba Matumona',
+    image: 'https://images.pexels.com/photos/937481/pexels-photo-937481.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+
+  {
+    title: 'Domingas Carolina',
+    image: 'https://images.pexels.com/photos/2080363/pexels-photo-2080363.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+
+  {
+    title: 'Cândido Cristôvão',
+    image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+  //Comidas
+  {
+    title: 'Pizzaria do estilo',
+    image: 'https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+
+  {
+    title: 'Restaurante Gimo',
+    image: 'https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    cta: 'Conhecer ', 
+    horizontal: true
+  },
+
+  {
+    title: 'Hamburgaria do Dodó',
+    image: 'https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+
+  {
+    title: 'Taberna',
+    image: 'https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+  {
+    title: 'Esplanada Grill',
+    image: 'https://scontent.flad1-1.fna.fbcdn.net/v/t1.6435-9/153018935_1583965045131557_5971483897176901665_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=e3f864&_nc_ohc=K-0OsehnGCEAX9iQjeF&_nc_ht=scontent.flad1-1.fna&oh=00_AT-YUT8oCmNowOBxfj1NkWvZMMb4XA9yavTBB4lZY9p2kw&oe=620E0B50',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
+  {
+    title: 'Piquenique Bar',
+    image: 'https://images.pexels.com/photos/10809799/pexels-photo-10809799.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    cta: 'Conhecer', 
+    horizontal: true
+  },
 ];
+
+

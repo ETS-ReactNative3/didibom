@@ -17,6 +17,10 @@ import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
 import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
+import Comidas from "../screens/Comidas";
+import Pessoas from "../screens/Pessoas";
+
+
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -97,7 +101,7 @@ function ScheduleStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="Pro"
         component={Pro}
         options={{
@@ -132,7 +136,7 @@ function ScheduleStack(props) {
         }}
       />
     </Stack.Navigator>
-    
+
   );
 }
 
@@ -150,7 +154,7 @@ function ArticlesStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="Pro"
         component={Pro}
         options={{
@@ -208,7 +212,7 @@ function PerfilStack(props) {
           headerTransparent: true
         }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="Pro"
         component={Pro}
         options={{
@@ -266,8 +270,8 @@ function HomeStack(props) {
         }}
       />
       <Stack.Screen
-        name="Pro"
-        component={Pro}
+        name="Pessoas"
+        component={Pessoas}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -283,8 +287,8 @@ function HomeStack(props) {
         }}
       />
       <Stack.Screen
-        name="CommingSoon"
-        component={CommingSoon}
+        name="Comidas"
+        component={Comidas}
         options={{
           header: ({ navigation, scene }) => (
             <Header

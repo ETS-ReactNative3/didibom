@@ -4,6 +4,7 @@ import { Block, theme } from 'galio-framework';
 
 import { Card } from '../components';
 import articles from '../constants/articles';
+import { writeUserData } from '../firebase/FirebaseConnection';
 const { width } = Dimensions.get('screen');
 
 class Home extends React.Component {

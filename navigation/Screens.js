@@ -205,9 +205,8 @@ function PerfilStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              transparent
-              white
-              title="Perfil"
+              title=""
+              options
               navigation={navigation}
               scene={scene}
             />
@@ -279,10 +278,9 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title=""
-              back
-              white
-              transparent
+              title="Pessoas"
+              options
+              search
               navigation={navigation}
               scene={scene}
             />
@@ -296,10 +294,9 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title=""
-              back
-              white
-              transparent
+              title="Comida"
+              options
+              search
               navigation={navigation}
               scene={scene}
             />

@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import * as Firebase from "firebase";
+import { getDatabase, ref, set } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,7 +25,37 @@ if (Firebase.app.length === 0) {
     console.log("erro");
 }*/
 
-const app = Firebase.initializeApp(firebaseConfig);
-const auth = app.auth();
+let app;
 
-export {auth}
+if (Firebase.apps.length === 0) {
+  app = Firebase.initializeApp(firebaseConfig);
+} else {
+  app = Firebase.app();
+}
+
+//const app = Firebase.initializeApp(firebaseConfig);
+const auth = app.auth();
+const db = Firebase.firestore(app);
+
+function newUser(userId, name, email, imageUrl) {
+  db.collection('users').doc(auth.currentUser.uid)
+    .set({
+      userId: auth.currentUser.uid,
+      name: name,
+      email: email
+    })
+}
+
+function getUserInfo(userId) {
+  const docRef = doc(db, "users", userInfo);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
+export { auth, newUser };

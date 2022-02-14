@@ -11,7 +11,7 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
-import { auth } from "../firebase/FirebaseConnection";
+import { auth, newUser } from "../firebase/FirebaseConnection";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -19,18 +19,19 @@ export default function Register() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState(''); 
+  const [name, setName] = useState('');
 
   const handleSignup = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        newUser(user.uid, name, email, '');
         alert("Utilizador Registado!");
         navigation.navigate("Login");
       })
       .catch(error => alert(error.message));
-  
+
   }
 
   return (

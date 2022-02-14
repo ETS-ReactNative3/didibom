@@ -20,6 +20,9 @@ import Schedule from "../screens/Schedule";
 import Comidas from "../screens/Comidas";
 import Pessoas from "../screens/Pessoas";
 import Login from "../screens/Login";
+import FirstStep from "../screens/FirstStep";
+import SecondStep from "../screens/SecondStep";
+import ThirdStep from "../screens/ThirdStep";
 
 
 // drawer
@@ -28,6 +31,7 @@ import CustomDrawerContent from "./Menu";
 // header for screens
 import { Icon, Header } from "../components";
 import { argonTheme, tabs } from "../constants";
+import { func } from "prop-types";
 
 const { width } = Dimensions.get("screen");
 
@@ -310,6 +314,18 @@ function HomeStack(props) {
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="none">
+      {/*<Stack.Screen
+        name="FirstStep"
+        component={FirstStep}
+      />
+      <Stack.Screen
+        name="SecondStep"
+        component={SecondStep}
+      />
+      <Stack.Screen
+        name="ThirdStep"
+        component={ThirdStep}
+      />*/}
       <Stack.Screen
         name="Login"
         component={Login}

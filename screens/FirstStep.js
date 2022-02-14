@@ -15,7 +15,7 @@ const { height, width } = Dimensions.get("screen");
 import argonTheme from "../constants/Theme";
 import Images from "../constants/Images";
 
-class Onboarding extends React.Component {
+class FirstStep extends React.Component {
   render() {
     const { navigation } = this.props;
 
@@ -24,35 +24,23 @@ class Onboarding extends React.Component {
         <StatusBar hidden />
         <Block flex center style={{ color: '#FC2C2C'}}>
         <ImageBackground
-            source={Images.Onboarding}
+            source={Images.FirstSteps[0]}
             style={{ height, width, zIndex: 1 }}
         />
-        </Block>
-        <Block center>
-          <Image source={Images.LogoOnboarding} style={styles.logo} />
         </Block>
         <Block flex space="between" style={styles.padded}>
             <Block flex space="around" style={{ zIndex: 2 }}>
               <Block style={styles.title}>
-                <Block>
-                  <Text color="white" size={50}>
-                    Bem-Vindo ao didibom
-                  </Text>
-                </Block>
-                <Block style={styles.subTitle}>
-                  <Text color="white" size={16}>
-                    Onde você pode encontrar um amigo e uma comida
-                  </Text>
-                </Block>
+                
               </Block>
               <Block center>
                 <Button
                   style={styles.button}
                   color={argonTheme.COLORS.SECONDARY}
-                  onPress={() => navigation.navigate("Login")}
+                  onPress={() => navigation.navigate("SecondStep")}
                   textStyle={{ color: argonTheme.COLORS.BLACK }}
                 >
-                  Começar!
+                  Quero chamar!
                 </Button>
               </Block>
           </Block>
@@ -75,6 +63,7 @@ const styles = StyleSheet.create({
   button: {
     width: width - theme.SIZES.BASE * 4,
     height: theme.SIZES.BASE * 3,
+    marginTop: '30%',
     shadowRadius: 0,
     shadowOpacity: 0
   },
@@ -93,4 +82,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Onboarding;
+export default FirstStep;

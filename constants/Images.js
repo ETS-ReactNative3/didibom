@@ -27,10 +27,12 @@ const Products = {
 };
 
 const FirstSteps = [
-  '../assets/imgs/Chamar-amigos.png',
-  '../assets/imgs/Onde-comer.png',
-  '../assets/imgs/Grave-o-momento.png'
+  require('../assets/imgs/DDBM/Chamar-amigos.png'),
+  require('../assets/imgs/DDBM/Onde-comer.png'),
+  require('../assets/imgs/DDBM/Grave-o-momento.png')
 ];
+
+
 
 export default {
   Onboarding,

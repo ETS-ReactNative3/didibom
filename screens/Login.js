@@ -90,7 +90,8 @@ class Login extends React.Component {
                       />
                     </Block>
                     <Block middle>
-                      <Button color="primary" style={styles.createButton}>
+                      <Button color="primary" style={styles.createButton}
+                      onPress={() => navigation.navigate("App")}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           LOGIN
                         </Text>

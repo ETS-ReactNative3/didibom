@@ -15,6 +15,7 @@ class Comidas extends React.Component {
     }
   }
 
+  
   renderArticles = () => {
     return (
       <ScrollView

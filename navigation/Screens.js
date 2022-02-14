@@ -19,6 +19,7 @@ import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
 import Comidas from "../screens/Comidas";
 import Pessoas from "../screens/Pessoas";
+import CameraPhotoPerfil from "../components/Camera";
 
 
 // drawer
@@ -87,6 +88,58 @@ function ElementsStack(props) {
   );
 }
 */
+
+function CameraStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="CameraStack"
+        component={CameraPhotoPerfil}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Câmera" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen
+        name="Pro"
+        component={Pro}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="CommingSoon"
+        component={CommingSoon}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+
+  );
+}
 
 function ScheduleStack(props) {
   return (
@@ -358,6 +411,8 @@ function AppStack(props) {
       <Drawer.Screen name="Conta" component={Register} />
       <Drawer.Screen name="Schedule" component={ScheduleStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
+      <Drawer.Screen name="Camera" component={CameraStack} />
+
     </Drawer.Navigator>
   );
 }

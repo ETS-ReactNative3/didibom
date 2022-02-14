@@ -5,20 +5,39 @@ import {
   ScrollView,
   Image,
   ImageBackground,
-  Platform
+  Platform,
+  TouchableOpacity
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
 import { Button } from "../components";
 import { Images, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
+import {Modal} from 'react-native'
+import CameraPhotoPerfil from "../components/Camera";
+import { useNavigation } from "@react-navigation/native";
+
 
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
 class Perfil extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openModal: false
+    }
+
+    setOpenModal = (valor) => {
+      this.setState({openModal : valor})
+
+    }
+  }
   render() {
+    const { navigation } = this.props;
+
     return (
       <Block flex style={styles.perfil}>
         <Block flex>
@@ -33,10 +52,32 @@ class Perfil extends React.Component {
             >
               <Block flex style={styles.perfilCard}>
                 <Block middle style={styles.avatarContainer}>
+                  <TouchableOpacity onPress={() => {
+                    setOpenModal(true);
+                  }}>
                   <Image
                     source={Images.PerfilImagem }
                     style={styles.avatar}
                   />
+                  {this.state.openModal &&
+                    <Modal
+                      animationType="slide"
+                      transparent={false}
+                      visible={this.state.openModal}
+                    >
+                      <Text>Um simples texto</Text>
+                      <TouchableOpacity onPress={() => {
+                        
+                      }}><Text>GALERIA</Text></TouchableOpacity>
+                      <TouchableOpacity onPress={() => {
+                        navigation.navigate("Camera");
+                      }}><Text>CÂMERA</Text></TouchableOpacity>
+                      <TouchableOpacity onPress={() => {
+                        setOpenModal(false);
+                      }}><Text>VOLTAR</Text></TouchableOpacity>
+                    </Modal>
+                  }
+                  </TouchableOpacity>
                 </Block>
                 <Block style={styles.info}>
                   <Block

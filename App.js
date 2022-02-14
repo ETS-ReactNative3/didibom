@@ -16,6 +16,10 @@ enableScreens();
 import Screens from "./navigation/Screens";
 import { Images, articles, argonTheme } from "./constants";
 
+import nomes from "./firebase/getRestaurantes";
+
+console.log();
+
 // cache app images
 const assetImages = [
   Images.Onboarding,

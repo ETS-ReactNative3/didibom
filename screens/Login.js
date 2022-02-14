@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -6,16 +6,40 @@ import {
   StatusBar,
   KeyboardAvoidingView
 } from "react-native";
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
+import { auth } from "../firebase/FirebaseConnection";
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 
-class Login extends React.Component {
-  render() {
-    const { navigation } = this.props;
+export default function Login() {
+    const navigation = useNavigation();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        if (user) {
+          navigation.navigate("App");
+        }
+      });
+
+      return unsubscribe;
+    }, []);
+
+    const handleLogin = () => {
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then(userCredentials => {
+          const user = userCredentials.user;
+          alert("Logado com " + user.email);
+          navigation.navigate("App");
+        })
+        .catch(error => alert(error.message));
+    }
 
     return (
       <Block flex middle>
@@ -62,6 +86,8 @@ class Login extends React.Component {
                       <Input
                         borderless
                         placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}     
                         iconContent={
                           <Icon
                             size={16}
@@ -78,6 +104,8 @@ class Login extends React.Component {
                         password
                         borderless
                         placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}     
                         iconContent={
                           <Icon
                             size={16}
@@ -91,7 +119,7 @@ class Login extends React.Component {
                     </Block>
                     <Block middle>
                       <Button color="primary" style={styles.createButton}
-                      onPress={() => navigation.navigate("App")}>
+                      onPress={handleLogin}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           LOGIN
                         </Text>
@@ -105,7 +133,6 @@ class Login extends React.Component {
         </ImageBackground>
       </Block>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -160,5 +187,3 @@ const styles = StyleSheet.create({
     marginTop: 25
   }
 });
-
-export default Login;

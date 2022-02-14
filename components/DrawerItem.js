@@ -4,6 +4,7 @@ import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
+import { auth } from "../firebase/FirebaseConnection";
 
 class DrawerItem extends React.Component {
   renderIcon = () => {
@@ -28,17 +29,17 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.ERROR}
           />
         );*/
-        /*
-      case "Articles":
-        return (
-          <Icon
-            name="spaceship"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-          />
-        );
-        */
+      /*
+    case "Articles":
+      return (
+        <Icon
+          name="spaceship"
+          family="ArgonExtra"
+          size={14}
+          color={focused ? "white" : argonTheme.COLORS.PRIMARY}
+        />
+      );
+      */
       case "Perfil":
         return (
           <Icon
@@ -80,8 +81,19 @@ class DrawerItem extends React.Component {
     return (
       <TouchableOpacity
         style={{ height: 60 }}
-        onPress={() =>
-          title == navigation.navigate(title)
+        onPress={() => {
+            if (title != "Logout") {
+              title == navigation.navigate(title);
+            } else {
+              auth
+                .signOut()
+                .then(() => {
+                  alert("Está a terminar a sessão!");
+                  navigation.replace("Login");
+                })
+                .catch(error => alert(error.message));
+            }
+          }
         }
       >
         <Block flex row style={containerStyles}>

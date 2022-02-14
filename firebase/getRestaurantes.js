@@ -1,11 +1,19 @@
 import database from "./firebaseConnection";
 
-database.collection("restaurantes").get()
-    .then((snapshot) => {
-        snapshot.docs.forEach(doc => {
-            console.log(doc)
-        })
+var nomes = [];
 
-    }).catch((e) => {
-        console.log(e);
+export default async function receber(e) {
+    nomes.push(e);
+}
+
+database.collection("restaurantes").get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+
+        receber(doc.get("nome"));
     })
+
+}).catch((e) => {
+    console.log("Erro " + e);
+})
+
+export default nomes;

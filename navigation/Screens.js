@@ -19,6 +19,7 @@ import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
 import Comidas from "../screens/Comidas";
 import Pessoas from "../screens/Pessoas";
+import Login from "../screens/Login";
 
 
 // drawer
@@ -139,7 +140,6 @@ function ScheduleStack(props) {
 
   );
 }
-
 
 function ArticlesStack(props) {
   return (
@@ -310,6 +310,14 @@ function HomeStack(props) {
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="none">
+      <Stack.Screen
+        name="Login"
+        component={Login}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+      />
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

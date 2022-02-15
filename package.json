@@ -53,7 +53,10 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-web": "^0.13.18",
-    "expo-camera": "~11.2.2"
+    "expo-camera": "~11.2.2",
+    "expo-image-picker": "~10.2.2",
+    "expo-permissions": "~12.1.1",
+    "expo-media-library": "~12.1.2"
   },
   "devDependencies": {
     "babel-preset-expo": "8.3.0"

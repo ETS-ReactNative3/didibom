@@ -9,12 +9,6 @@ const { width } = Dimensions.get('screen');
 import database from '../firebase/firebaseConnection';
 
 class Comidas extends React.Component {
-  constructor(props) {
-    this.state = {
-      lista: []
-    }
-  }
-
   
   renderArticles = () => {
     return (

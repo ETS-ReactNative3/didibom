@@ -5,6 +5,9 @@ import { useRef } from 'react';
 import { Camera } from 'expo-camera';
 import { useEffect } from 'react';
 
+import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
+
 
 export default function CameraPhotoPerfil() {
 
@@ -20,6 +23,12 @@ export default function CameraPhotoPerfil() {
       setHasPermission(status === 'granted')
     })();
 
+
+    (async () => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      setHasPermission(status === 'granted')
+    })();
+
   }, [])
 
   if (hasPermission === null) {
@@ -32,11 +41,21 @@ export default function CameraPhotoPerfil() {
 
   async function takePicture() {
     if (camRef) {
-      const data  = await camRef.current.takePictureAsync();
-      setCapturedPhoto(data.uri )
+      const data = await camRef.current.takePictureAsync();
+      setCapturedPhoto(data.uri)
       setOpen(true);
       console.log(data);
     }
+  }
+
+  async function savePicture() {
+    const asset = await MediaLibrary.createAssetAsync(capturedPhoto)
+    .then(() => {
+      alert("Salvo com sucesso")
+    })
+    .catch((error) => {
+      console.log('err', error)
+    })
   }
 
   return (
@@ -74,21 +93,26 @@ export default function CameraPhotoPerfil() {
       </TouchableOpacity>
 
       {
-        capturedPhoto && 
+        capturedPhoto &&
         <Modal
           animationType="slide"
           transparent={false}
           visible={open}
         >
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: 20}}>
-            <TouchableOpacity style = {{margin: 10}}
-              onPress= {() => setOpen(false)} >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 20 }}>
+            <TouchableOpacity style={{ margin: 10 }}
+              onPress={() => setOpen(false)} >
               <Text>Fechar</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={{ margin: 10 }}
+              onPress={() => savePicture()} >
+              <Text>Guardar foto</Text>
+            </TouchableOpacity>
+
             <Image
-              style={{width:"100%", height:300, borderRadius: 20}}
-              source={{uri: capturedPhoto}}
+              style={{ width: "100%", height: 300, borderRadius: 20 }}
+              source={{ uri: capturedPhoto }}
             >
             </Image>
           </View>

@@ -44,6 +44,7 @@
     "file-url": "^4.0.0",
     "firebase": "^8.2.3",
     "galio-framework": "^0.8.0",
+    "image-picker": "^0.3.1",
     "js-yaml": "^4.1.0",
     "metro": "^0.66.2",
     "mysql": "^2.18.1",

@@ -339,7 +339,7 @@ function HomeStack(props) {
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="none">
-      {/*<Stack.Screen
+      <Stack.Screen
         name="FirstStep"
         component={FirstStep}
       />
@@ -350,7 +350,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name="ThirdStep"
         component={ThirdStep}
-      />*/}
+      />
       <Stack.Screen
         name="Login"
         component={Login}

@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Platform,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  View
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { getUserInfo } from "../firebase/Database";
@@ -27,14 +28,19 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function Perfil() {
+export default function Perfil({ navigation }) {
+
+
   const [openModal, setOpenModal] = useState(false);
-  
-  const { navigation } = useNavigation();
+
 
   const [DATA, setData] = useState(null);
 
   let pickerResult;
+
+  function imagePickerCallback() {
+
+  }
 
   const getElements = async () => {
     try {
@@ -45,7 +51,7 @@ export default function Perfil() {
     } finally {
     }
 
-    this.openImagePickerAsync = async () => {
+    const openImagePickerAsync = async () => {
       let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (permissionResult.granted === false) {
@@ -84,42 +90,40 @@ export default function Perfil() {
                 {(<FlatList
                   data={DATA}
                   renderItem={({ item }) => (
-                    <Image
-                      source={{ uri: item.imgUrl }}
-                      style={styles.avatar}
-                    />
+                    <TouchableOpacity onPress={() =>
+                      setOpenModal(true)
+                    }>
+                      <Image
+                        source={{ uri: item.imgUrl }}
+                        style={styles.avatar}
+                      />
+                    </TouchableOpacity>
                   )}
                 />)}
 
-                <TouchableOpacity onPress={() => {
-                  setOpenModal(true);
-                }}>
+                <View style={{ flex: 1, flexDirection: 'column', alignContent: 'center', height: '100%' }}>
                   {openModal &&
                     <Modal
-                      style={styles.btnModal}
+                      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}
                       animationType="slide"
                       transparent={false}
                       visible={openModal}
                     >
-                      <Text>Um simples texto</Text>
-                      <TouchableOpacity
-                          style={styles.btnCameras}
-                          onPress={() => {
-                            this.openImagePickerAsync();
-                          }}><Text style={styles.modalText}>GALERIA</Text></TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.btnCameras}
-                          onPress={() => {
-                            navigation.navigate("Camera");
-                          }}><Text style={styles.modalText}>CÂMERA</Text></TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.btnCameras}
-                          onPress={() => {
-                            setOpenModal(false);
-                          }}><Text style={styles.modalText}>VOLTAR</Text></TouchableOpacity>
+                      {/*<Button style={{alignSelf: 'center'}} onPress={() => {
+                            openImagePickerAsync();
+                          }} >Galeria</Button>
+                          */}
+                      <Button style={{ alignSelf: 'center' }} onPress={() => {
+                        navigation.navigate("Camera");
+                      }} >Câmera</Button>
+                      <Button style={{ alignSelf: 'center' }} onPress={() => {
+                        setOpenModal(false);
+                      }} >Voltar</Button>
+
                     </Modal>
                   }
-                </TouchableOpacity>
+                </View>
+
               </Block>
               <Block style={styles.info}>
                 <Block
@@ -128,7 +132,7 @@ export default function Perfil() {
                   space="evenly"
                   style={{ marginTop: 20, paddingBottom: 24 }}
                 >
-                
+
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}

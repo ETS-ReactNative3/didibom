@@ -48,15 +48,18 @@ function newUser(userId, name, email, imageUrl) {
 }
 
 async function getUserInfo(userId = auth.currentUser.uid) {
-  let user = {name: "default"};
+  let users = [];
 
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    user.name = doc.data().name;
+
+    if (doc.data().userId == userId) {
+      users.push({imgUrl: doc.data().imgUrl, name: doc.data().name});
+    }
   });
 
-  return user;
+  return users;
 }
 
 async function getAllUsers() {

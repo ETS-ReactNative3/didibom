@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   ScrollView,
   StyleSheet,
-  Image
+  Image,
+  FlatList
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
@@ -18,6 +19,22 @@ function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, stat
     "Logout"
   ];
 
+  const [DATA, setData] = useState(null);
+
+  const getElements = async () => {
+    try {
+      const info = await getUserInfo();
+      setData(info);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    getElements();
+  }, []);
+
 
   return (
     <Block
@@ -26,8 +43,15 @@ function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, stat
     >
       <Block flex={0.06} style={styles.header}>
         <Image styles={styles.logo} source={Images.Logo} />
-        <Text>
-        </Text>
+        {(<FlatList
+            data={DATA}
+            renderItem={({ item }) => (
+              <Text>
+                {item.name}
+              </Text>
+            )}
+          />
+          )}
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>

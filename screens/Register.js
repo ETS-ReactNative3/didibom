@@ -11,7 +11,7 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
-import { auth, newUser } from "../firebase/FirebaseConnection";
+import { auth, newUser } from "../firebase/Database";
 
 const { width, height } = Dimensions.get("screen");
 

@@ -6,7 +6,7 @@ import { Card } from '../components';
 import articles from '../constants/articles';
 const { width } = Dimensions.get('screen');
 
-import database from '../firebase/firebaseConnection';
+//import database from '../firebase/FirebaseConnection';
 
 class Comidas extends React.Component {
   constructor(props) {

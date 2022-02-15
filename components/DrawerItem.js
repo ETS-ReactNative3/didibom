@@ -4,7 +4,7 @@ import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
-import { auth, writeUserData } from "../firebase/FirebaseConnection";
+import { auth, writeUserData } from "../firebase/Database";
 
 class DrawerItem extends React.Component {
   renderIcon = () => {

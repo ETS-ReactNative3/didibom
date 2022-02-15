@@ -362,7 +362,6 @@ function HomeStack(props) {
 }
 
 export default function OnboardingStack(props) {
-  console.log("ola mundo");
   return (
     <Stack.Navigator mode="card" headerMode="none">
       {/*<Stack.Screen

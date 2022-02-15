@@ -8,7 +8,7 @@ import { Block, Text, theme } from "galio-framework";
 
 import Images from "../constants/Images";
 import { DrawerItem as DrawerCustomItem } from '../components';
-import { auth } from "../firebase/FirebaseConnection";
+import { auth, getUserInfo } from "../firebase/Database";
 
 function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, state, ...rest }) {
   const screens = [
@@ -17,6 +17,8 @@ function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, stat
     "Conta",
     "Logout"
   ];
+
+
   return (
     <Block
       style={styles.container}
@@ -25,7 +27,6 @@ function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, stat
       <Block flex={0.06} style={styles.header}>
         <Image styles={styles.logo} source={Images.Logo} />
         <Text>
-          {auth.currentUser?.email}
         </Text>
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>

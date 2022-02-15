@@ -1,14 +1,16 @@
 import React, {useState} from "react";
-import { Image } from "react-native";
+import { Image, LogBox } from "react-native";
 import AppLoading from "expo-app-loading";
 import { useFonts } from '@use-expo/font';
 import { Asset } from "expo-asset";
 import { Block, GalioProvider } from "galio-framework";
 import { NavigationContainer } from "@react-navigation/native";
+import * as Database from "./firebase/Database";
 
 import restaurantes from "./firebase/getRestaurantes";
+console.log("===========UPDATE===============");
 //console.log(restaurantes);
-
+LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";
 enableScreens();
@@ -17,8 +19,6 @@ import Screens from "./navigation/Screens";
 import { Images, articles, argonTheme } from "./constants";
 
 import nomes from "./firebase/getRestaurantes";
-
-console.log();
 
 // cache app images
 const assetImages = [

@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import * as Firebase from "firebase";
-import { getDatabase, ref, set } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -42,20 +42,33 @@ function newUser(userId, name, email, imageUrl) {
     .set({
       userId: auth.currentUser.uid,
       name: name,
-      email: email
+      email: email,
+      imgUrl: "https://www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg"
     })
 }
 
-function getUserInfo(userId) {
-  const docRef = doc(db, "users", userInfo);
-  const docSnap = await getDoc(docRef);
+async function getUserInfo(userId = auth.currentUser.uid) {
+  let user = {name: "default"};
 
-  if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
+  let userCollection = await db.collection('users').get();
+
+  userCollection.docs.forEach((doc) => {
+    user.name = doc.data().name;
+  });
+
+  return user;
 }
 
-export { auth, newUser };
+async function getAllUsers() {
+  let users = [];
+
+  let userCollection = await db.collection('users').get();
+
+  userCollection.docs.forEach((doc) => {
+    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name});
+  });
+
+  return users;
+}
+
+export { auth, newUser, getUserInfo, getAllUsers };

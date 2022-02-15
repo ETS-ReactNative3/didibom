@@ -33,6 +33,7 @@ if (Firebase.apps.length === 0) {
   app = Firebase.app();
 }
 
+const cloudStorage = app.storage();
 //const app = Firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
 const db = Firebase.firestore(app);
@@ -88,4 +89,4 @@ async function getAllRestaurants() {
   return restaurants;
 }
 
-export {db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };
+export {cloudStorage ,db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };

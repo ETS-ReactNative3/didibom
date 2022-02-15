@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
+import { db, auth } from '../firebase/Database';
 
 
 export default function CameraPhotoPerfil() {
@@ -43,6 +44,7 @@ export default function CameraPhotoPerfil() {
     if (camRef) {
       const data = await camRef.current.takePictureAsync();
       setCapturedPhoto(data.uri)
+
       setOpen(true);
       //console.log(data);
     }
@@ -50,12 +52,22 @@ export default function CameraPhotoPerfil() {
 
   async function savePicture() {
     const asset = await MediaLibrary.createAssetAsync(capturedPhoto)
-    .then(() => {
-      alert("Salvo com sucesso")
-    })
-    .catch((error) => {
-      console.log('err', error)
-    })
+      .then(() => {
+        alert("Salvo com sucesso")
+
+
+        db.collection('users').doc(auth.currentUser.uid)
+          .update({
+            imgUrl: capturedPhoto
+          }).then(() => {
+            console.log("Document successfully updated!");
+        })
+
+
+      })
+      .catch((error) => {
+        console.log('err', error)
+      })
   }
 
   return (
@@ -121,6 +133,8 @@ export default function CameraPhotoPerfil() {
     </SafeAreaView>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

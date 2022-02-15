@@ -88,4 +88,4 @@ async function getAllRestaurants() {
   return restaurants;
 }
 
-export { auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };
+export {db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };

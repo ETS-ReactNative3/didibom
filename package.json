@@ -55,15 +55,11 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
-<<<<<<< HEAD
     "react-native-web": "^0.13.18",
     "expo-camera": "~11.2.2",
     "expo-image-picker": "~10.2.2",
     "expo-permissions": "~12.1.1",
     "expo-media-library": "~12.1.2"
-=======
-    "react-native-web": "^0.13.18"
->>>>>>> ba4094316a2c1ad894cb0ba0affaa9a0f6a359a0
   },
   "devDependencies": {
     "babel-preset-expo": "8.3.0"

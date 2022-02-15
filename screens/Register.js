@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -6,101 +6,129 @@ import {
   StatusBar,
   KeyboardAvoidingView
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
+import { auth, newUser } from "../firebase/Database";
 
 const { width, height } = Dimensions.get("screen");
 
-class Register extends React.Component {
-  render() {
-    return (
-      <Block flex middle>
-        <StatusBar hidden />
-        <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        >
-          <Block safe flex middle>
-            <Block style={styles.registerContainer}>
-              <Block flex={0.25} middle style={styles.socialConnect}>
-                <Text color="#8898AA" size={12}>
-                  Entrar com
-                </Text>
-                <Block row style={{ marginTop: theme.SIZES.BASE }}>
-                  <Button style={styles.socialButtons}>
-                    <Block row>
-                      <Icon
-                        name="logo-google"
-                        family="Ionicon"
-                        size={14}
-                        color={"black"}
-                        style={{ marginTop: 2, marginRight: 5 }}
-                      />
-                      <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                    </Block>
-                  </Button>
-                </Block>
+export default function Register() {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const handleSignup = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        newUser(user.uid, name, email, '');
+        alert("Utilizador Registado!");
+        navigation.navigate("Login");
+      })
+      .catch(error => alert(error.message));
+
+  }
+
+  return (
+    <Block flex middle>
+      <StatusBar hidden />
+      <ImageBackground
+        source={Images.RegisterBackground}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <Block safe flex middle>
+          <Block style={styles.registerContainer}>
+            <Block
+              flex={0.25}
+              middle style={styles.socialConnect}
+            >
+              <Text color="#8898AA" size={12}>
+                Login
+              </Text>
+              <Block row style={{ marginTop: theme.SIZES.BASE }}>
+                <Button style={styles.socialButtons}>
+                  <Block row>
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
+                      onPress={() => navigation.navigate("Login")}>
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        LOGIN
+                      </Text>
+                    </Button>
+                  </Block>
+                </Button>
               </Block>
-              <Block flex>
-                <Block flex={0.17} middle>
-                  <Text color="#8898AA" size={12}>
-                    Ou inscrever-se da maneira clássica
-                  </Text>
-                </Block>
-                <Block flex center>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
-                  >
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Nome"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="hat-3"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        borderless
-                        placeholder="Email"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                      <Block row style={styles.passwordCheck}>
+            </Block>
+            <Block flex>
+              <Block flex={0.17} middle>
+                <Text color="#8898AA" size={12}>
+                  Ou inscrever-se da maneira clássica
+                </Text>
+              </Block>
+              <Block flex center>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Nome"
+                      value={name}
+                      onChangeText={text => setName(text)}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="hat-3"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+                  <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Input
+                      borderless
+                      placeholder="Email"
+                      value={email}
+                      onChangeText={text => setEmail(text)}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+                  <Block width={width * 0.8}>
+                    <Input
+                      password
+                      borderless
+                      placeholder="Password"
+                      value={password}
+                      onChangeText={text => setPassword(text)}
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="padlock-unlocked"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    {/*<Block row style={styles.passwordCheck}>
                         <Text size={12} color={argonTheme.COLORS.MUTED}>
                           segurança da password:
                         </Text>
@@ -108,9 +136,9 @@ class Register extends React.Component {
                           {" "}
                           forte
                         </Text>
-                      </Block>
-                    </Block>
-                    <Block row width={width * 0.75}>
+                      </Block>*/}
+                  </Block>
+                  {/*<Block row width={width * 0.75}>
                       <Checkbox
                         checkboxStyle={{
                           borderWidth: 3
@@ -128,23 +156,22 @@ class Register extends React.Component {
                       >
                         Termos e codições
                       </Button>
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          CRIAR CONTA
-                        </Text>
-                      </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
-                </Block>
+                      </Block>*/}
+                  <Block middle>
+                    <Button color="primary" style={styles.createButton} onPress={handleSignup}>
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        CRIAR CONTA
+                      </Text>
+                    </Button>
+                  </Block>
+                </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
-      </Block>
-    );
-  }
+        </Block>
+      </ImageBackground>
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -199,5 +226,3 @@ const styles = StyleSheet.create({
     marginTop: 25
   }
 });
-
-export default Register;

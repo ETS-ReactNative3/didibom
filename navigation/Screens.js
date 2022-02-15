@@ -19,6 +19,10 @@ import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
 import Comidas from "../screens/Comidas";
 import Pessoas from "../screens/Pessoas";
+import Login from "../screens/Login";
+import FirstStep from "../screens/FirstStep";
+import SecondStep from "../screens/SecondStep";
+import ThirdStep from "../screens/ThirdStep";
 import CameraPhotoPerfil from "../components/Camera";
 
 
@@ -28,6 +32,7 @@ import CustomDrawerContent from "./Menu";
 // header for screens
 import { Icon, Header } from "../components";
 import { argonTheme, tabs } from "../constants";
+import { func } from "prop-types";
 
 const { width } = Dimensions.get("screen");
 
@@ -193,7 +198,6 @@ function ScheduleStack(props) {
   );
 }
 
-
 function ArticlesStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -254,9 +258,8 @@ function PerfilStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              transparent
-              white
-              title="Perfil"
+              title=""
+              options
               navigation={navigation}
               scene={scene}
             />
@@ -328,10 +331,9 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title=""
-              back
-              white
-              transparent
+              title="Pessoas"
+              options
+              search
               navigation={navigation}
               scene={scene}
             />
@@ -345,10 +347,9 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title=""
-              back
-              white
-              transparent
+              title="Comida"
+              options
+              search
               navigation={navigation}
               scene={scene}
             />
@@ -363,6 +364,26 @@ function HomeStack(props) {
 export default function OnboardingStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="none">
+      {/*<Stack.Screen
+        name="FirstStep"
+        component={FirstStep}
+      />
+      <Stack.Screen
+        name="SecondStep"
+        component={SecondStep}
+      />
+      <Stack.Screen
+        name="ThirdStep"
+        component={ThirdStep}
+      />*/}
+      <Stack.Screen
+        name="Login"
+        component={Login}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+      />
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

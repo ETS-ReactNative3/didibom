@@ -1,14 +1,33 @@
-import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Dimensions, ScrollView, FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
 import { Card } from '../components';
 import articles from '../constants/articles';
+import { getAllUsers } from '../firebase/Database';
+
 const { width } = Dimensions.get('screen');
 
-class Pessoas extends React.Component {
-  renderArticles = () => {
-    return (
+export default function Pessoas() {
+
+  const [DATA, setData] = useState(null);
+
+  const getElements = async () => {
+    try {
+      const info = await getAllUsers();
+      setData(info);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    getElements();
+  }, []);
+
+  return (
+    <Block flex center style={styles.home}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
@@ -21,30 +40,24 @@ class Pessoas extends React.Component {
             </Block>
              */
           }
-          <Card item={articles[2]} horizontal />
-          <Card item={articles[3]} horizontal />
-          <Card item={articles[9]} horizontal />
-          <Card item={articles[8]} horizontal />
-          <Card item={articles[7]} horizontal />
-          <Card item={articles[5]} horizontal />
-          <Card item={articles[6]} horizontal />
+
+          {(<FlatList
+            data={DATA}
+            renderItem={({ item }) => (
+              <Card item={{image: item.imgUrl, title: item.name, cta: "Conhecer"}} horizontal />
+            )}
+          />
+          )}
 
         </Block>
       </ScrollView>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderArticles()}
-      </Block>
-    );
-  }
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
   home: {
+    marginTop: '60%',
     width: width,
   },
   articles: {
@@ -52,5 +65,3 @@ const styles = StyleSheet.create({
     paddingVertical: theme.SIZES.BASE,
   },
 });
-
-export default Pessoas;

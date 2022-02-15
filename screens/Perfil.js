@@ -18,6 +18,9 @@ import { HeaderHeight } from "../constants/utils";
 import { Modal } from 'react-native'
 import CameraPhotoPerfil from "../components/Camera";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
 
 
 const { width, height } = Dimensions.get("screen");
@@ -26,9 +29,12 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 export default function Perfil() {
   const [openModal, setOpenModal] = useState(false);
+  
   const { navigation } = useNavigation();
 
   const [DATA, setData] = useState(null);
+
+  let pickerResult;
 
   const getElements = async () => {
     try {
@@ -38,6 +44,23 @@ export default function Perfil() {
       console.log(error);
     } finally {
     }
+
+    this.openImagePickerAsync = async () => {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        return;
+      }
+
+      this.pickerResult = await ImagePicker.launchImageLibraryAsync();
+      console.log(pickerResult);
+
+    }
+    async function savePicture() {
+
+    }
+
   }
 
   useEffect(() => {
@@ -73,20 +96,27 @@ export default function Perfil() {
                 }}>
                   {openModal &&
                     <Modal
+                      style={styles.btnModal}
                       animationType="slide"
                       transparent={false}
                       visible={openModal}
                     >
                       <Text>Um simples texto</Text>
-                      <TouchableOpacity onPress={() => {
-
-                      }}><Text>GALERIA</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => {
-                        navigation.navigate("Camera");
-                      }}><Text>CÂMERA</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => {
-                        setOpenModal(false);
-                      }}><Text>VOLTAR</Text></TouchableOpacity>
+                      <TouchableOpacity
+                          style={styles.btnCameras}
+                          onPress={() => {
+                            this.openImagePickerAsync();
+                          }}><Text style={styles.modalText}>GALERIA</Text></TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.btnCameras}
+                          onPress={() => {
+                            navigation.navigate("Camera");
+                          }}><Text style={styles.modalText}>CÂMERA</Text></TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.btnCameras}
+                          onPress={() => {
+                            setOpenModal(false);
+                          }}><Text style={styles.modalText}>VOLTAR</Text></TouchableOpacity>
                     </Modal>
                   }
                 </TouchableOpacity>
@@ -262,5 +292,20 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: thumbMeasure,
     height: thumbMeasure
+  },
+  btnCameras: {
+    backgroundColor: argonTheme.COLORS.DEFAULT,
+    marginBottom: 10,
+    padding: 20
+
+  },
+  btnModal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  modalText: {
+    color: 'white'
   }
 });

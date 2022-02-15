@@ -130,4 +130,4 @@ async function getRandom() {
   return finalVet;
 }
 
-export { auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom };
+export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom };

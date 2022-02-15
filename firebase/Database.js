@@ -55,7 +55,7 @@ async function getUserInfo(userId = auth.currentUser.uid) {
   userCollection.docs.forEach((doc) => {
 
     if (doc.data().userId == userId) {
-      users.push({imgUrl: doc.data().imgUrl, name: doc.data().name});
+      users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1});
     }
   });
 
@@ -68,7 +68,7 @@ async function getAllUsers() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name});
+    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1});
   });
 
   return users;
@@ -84,7 +84,8 @@ async function getAllRestaurants() {
       imgUrl: doc.data().imgs[0],
       name: doc.data().nome,
       descricao: doc.data().descricao,
-      localizacao: doc.data().localizacao
+      localizacao: doc.data().localizacao,
+      type: 2
     });
   });
 

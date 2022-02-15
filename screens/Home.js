@@ -36,6 +36,7 @@ export default function Home() {
             renderItem={({ item }) => (
               <Card item={{
                 image: item.imgUrl,
+                type: item.type,
                 title: (item.type == 2) ? (item.descricao + "\n\n" + item.name + "\n" + item.localizacao) : item.name,
                 cta: "Conhecer"}} horizontal />
             )}

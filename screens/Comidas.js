@@ -40,7 +40,7 @@ export default function Comidas() {
               <Card item={{
                 image: item.imgUrl,
                 title: (item.descricao + "\n\n" + item.name + "\n" + item.localizacao),
-                cta: "Conhecer"}} horizontal />
+                cta: "Conhecer", type: item.type}} horizontal />
             )}
           />
           )}

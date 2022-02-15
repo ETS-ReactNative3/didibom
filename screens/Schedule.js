@@ -6,269 +6,122 @@ import { Block, Text, Button as GaButton, theme } from "galio-framework";
 import { argonTheme, tabs } from "../constants";
 import { Button, Select, Icon, Input, Header, Switch, Card, ModalComponent } from "../components";
 
+import { useNavigation } from "@react-navigation/native";
+
 import articles from '../constants/articles';
 
 const { width } = Dimensions.get("screen");
 
+export default function Schedule({ route }) {
+
+  const { navigation } = useNavigation();
+  const { name, imgUrl } = route.params;
+
+  return (
+    <Block flex center>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30, width }}>
+        <Block flex>
+
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Card item={{ image: imgUrl, title: name, type: 2, cta: "⭐⭐⭐⭐⭐" }} full />
+
+          </Block>
+          <Block row space="evenly"
+            style={{ flex: 1, flexDirection: 'row' }}
+          >
+            <Block flex right style={{ marginTop: 8, }}>
+              <Text
+                style={{ marginRight: 40, marginBottom: theme.SIZES.BASE / 2 }}
+                color={argonTheme.COLORS.DEFAULT}
+              >
+                Pessoas
+              </Text>
+
+              <Select
+                style={{ paddingTop: 14, paddingBottom: 14, backgroundColor: argonTheme.COLORS.ICON }}
+                defaultIndex={1}
+                options={["01", "02", "03", "04", "05", "06"]}
+                onValueChange={console.log(5)}
+
+              >
+              </Select>
+            </Block>
+
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 27 }}>
+              <Input
+                placeholder="DD MM HH:MM"
+                iconContent={
+                  <Icon
+                    size={11}
+                    style={{ marginRight: 10 }}
+                    color={argonTheme.COLORS.ICON}
+                    name="calendar-date"
+                    family="ArgonExtra"
+                  />
+                }
+              />
+            </Block>
 
 
-class Schedule extends React.Component {
-
-  state = {
-    price: 0,
-    /*
-    "switch-1": true,
-    "switch-2": false
-     */
-  };
-
-  updatePrice = (price) => {
-    this.setState({ price: price })
-  }
-
-
-
-  toggleSwitch = switchId =>
-    this.setState({ [switchId]: !this.state[switchId] });
-
-  renderButtons = () => {
-
-    const { navigation } = this.props;
-    //const meuItem = route.params;
-    //console.log(meuItem)
-    return (
-      <Block flex>
-
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Card item={articles[1]} full />
-
-        </Block>
-        <Block row space="evenly"
-          style={{ flex: 1, flexDirection: 'row' }}
-        >
-          <Block flex right style={{ marginTop: 8, }}>
-            <Text
-              style={{ marginRight: 40, marginBottom: theme.SIZES.BASE / 2 }}
-              color={argonTheme.COLORS.DEFAULT}
-            >
-              Pessoas
-            </Text>
-
-            <Select
-              style={{ paddingTop: 14, paddingBottom: 14, backgroundColor: argonTheme.COLORS.ICON }}
-              defaultIndex={1}
-              options={["01", "02", "03", "04", "05", "06"]}
-              onValueChange={console.log(5)}
-
-            >
-            </Select>
+          </Block>
+          <Block center>
+            <Button color="default" style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
+              Concluir Agendamento
+            </Button>
           </Block>
 
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 27 }}>
-            <Input
-              placeholder="DD MM HH:MM"
-              iconContent={
-                <Icon
-                  size={11}
-                  style={{ marginRight: 10 }}
-                  color={argonTheme.COLORS.ICON}
-                  name="calendar-date"
-                  family="ArgonExtra"
+        </Block>
+        <Block flex style={styles.group}>
+          <Text bold size={16} style={styles.title}>
+            Social
+          </Text>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Block row center space="between">
+              <Block flex middle right>
+                <GaButton
+                  round
+                  onlyIcon
+                  shadowless
+                  icon="facebook"
+                  iconFamily="Font-Awesome"
+                  iconColor={theme.COLORS.WHITE}
+                  iconSize={theme.SIZES.BASE * 1.625}
+                  color={theme.COLORS.FACEBOOK}
+                  style={[styles.social, styles.shadow]}
                 />
-              }
-            />
-          </Block>
-
-
-        </Block>
-        <Text
-          style={{ marginLeft: 40, marginBottom: theme.SIZES.BASE / 2 }}
-          color={argonTheme.COLORS.DEFAULT}
-        >
-          Price: {this.state.price}
-        </Text>
-        <Block center>
-          <Button color="default" style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
-            Concluir Agendamento
-          </Button>
-        </Block>
-
-      </Block>
-
-    );
-  };
-
-  renderText = () => {
-    return (
-      <Block flex style={styles.group}>
-        {/*
-        <Text bold size={16} style={styles.title}>
-          Typography
-        </Text>
-
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Text
-            h1
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 1
-          </Text>
-          <Text
-            h2
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 2
-          </Text>
-          <Text
-            h3
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 3
-          </Text>
-          <Text
-            h4
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 4
-          </Text>
-          <Text
-            h5
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 5
-          </Text>
-          <Text
-            p
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Paragraph
-          </Text>
-          <Text muted>This is a muted paragraph.</Text>
-        </Block>
-                 */
-        }
-      </Block>
-    );
-  };
-
-  renderInputs = () => {
-    return;
-  };
-
-  renderSwitches = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Switches
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block
-            row
-            middle
-            space="between"
-            style={{ marginBottom: theme.SIZES.BASE }}
-          >
-            <Text size={14}>Switch is ON</Text>
-            <Switch
-              value={this.state["switch-1"]}
-              onValueChange={() => this.toggleSwitch("switch-1")}
-            />
-          </Block>
-          <Block row middle space="between">
-            <Text size={14}>Switch is OFF</Text>
-            <Switch
-              value={this.state["switch-2"]}
-              onValueChange={() => this.toggleSwitch("switch-2")}
-            />
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
-
-  renderTableCell = () => {
-    const { routes, navigation } = this.props;
-    return;
-  };
-
-  renderSocial = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Social
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block row center space="between">
-            <Block flex middle right>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="facebook"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.FACEBOOK}
-                style={[styles.social, styles.shadow]}
-              />
-            </Block>
-            <Block flex middle center>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="twitter"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.TWITTER}
-                style={[styles.social, styles.shadow]}
-              />
-            </Block>
-            <Block flex middle left>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="dribbble"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.DRIBBBLE}
-                style={[styles.social, styles.shadow]}
-              />
+              </Block>
+              <Block flex middle center>
+                <GaButton
+                  round
+                  onlyIcon
+                  shadowless
+                  icon="twitter"
+                  iconFamily="Font-Awesome"
+                  iconColor={theme.COLORS.WHITE}
+                  iconSize={theme.SIZES.BASE * 1.625}
+                  color={theme.COLORS.TWITTER}
+                  style={[styles.social, styles.shadow]}
+                />
+              </Block>
+              <Block flex middle left>
+                <GaButton
+                  round
+                  onlyIcon
+                  shadowless
+                  icon="dribbble"
+                  iconFamily="Font-Awesome"
+                  iconColor={theme.COLORS.WHITE}
+                  iconSize={theme.SIZES.BASE * 1.625}
+                  color={theme.COLORS.DRIBBBLE}
+                  style={[styles.social, styles.shadow]}
+                />
+              </Block>
             </Block>
           </Block>
         </Block>
-      </Block>
-    );
-  };
-
-  renderNavigation = () => {
-    return;
-  };
-
-  render() {
-    return (
-      <Block flex center>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30, width }}>
-          {this.renderButtons()}
-          {this.renderText()}
-          {this.renderInputs()}
-          {this.renderSocial()}
-          {/*this.renderSwitches()*/}
-          {this.renderNavigation()}
-          {this.renderTableCell()}
-        </ScrollView>
-      </Block>
-    );
-  }
+      </ScrollView>
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -409,5 +262,3 @@ const stylesModal = StyleSheet.create({
   }
 });
 */
-
-export default Schedule;

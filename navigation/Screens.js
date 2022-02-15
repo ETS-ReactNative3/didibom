@@ -24,6 +24,7 @@ import FirstStep from "../screens/FirstStep";
 import SecondStep from "../screens/SecondStep";
 import ThirdStep from "../screens/ThirdStep";
 import CameraPhotoPerfil from "../components/Camera";
+import PerfilAConhecer from "../screens/PerfilAConhecer";
 
 
 // drawer
@@ -103,58 +104,6 @@ function CameraStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Câmera" navigation={navigation} scene={scene} />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" }
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
-      <Stack.Screen
-        name="CommingSoon"
-        component={CommingSoon}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
-    </Stack.Navigator>
-
-  );
-}
-
-function ScheduleStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="screen">
-      <Stack.Screen
-        name="Elements"
-        component={Schedule}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header title="Agendamento" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
@@ -357,6 +306,32 @@ function HomeStack(props) {
           headerTransparent: true
         }}
       />
+      <Stack.Screen
+        name="PerfilAConhecer"
+        component={PerfilAConhecer}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="PerfilAConhecer"
+              options
+              search
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Schedule"
+        component={Schedule}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Agendamento" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -430,7 +405,6 @@ function AppStack(props) {
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Perfil" component={PerfilStack} />
       <Drawer.Screen name="Conta" component={Register} />
-      <Drawer.Screen name="Schedule" component={ScheduleStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
       <Drawer.Screen name="Camera" component={CameraStack} />
 

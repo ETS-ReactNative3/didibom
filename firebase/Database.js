@@ -71,4 +71,21 @@ async function getAllUsers() {
   return users;
 }
 
-export { auth, newUser, getUserInfo, getAllUsers };
+async function getAllRestaurants() {
+  let restaurants = [];
+
+  let userCollection = await db.collection('restaurantes').get();
+
+  userCollection.docs.forEach((doc) => {
+    restaurants.push({
+      img: doc.data().imgs[0],
+      name: doc.data().nome,
+      descricao: doc.data().descricao,
+      localizacao: doc.data().localizacao
+    });
+  });
+
+  return restaurants;
+}
+
+export { auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };

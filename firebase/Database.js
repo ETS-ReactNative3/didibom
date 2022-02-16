@@ -49,15 +49,18 @@ function newUser(userId, name, email, imageUrl) {
 }
 
 async function getUserInfo(userId = auth.currentUser.uid) {
-  let user = {name: "default"};
+  let users = [];
 
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    user.name = doc.data().name;
+
+    if (doc.data().userId == userId) {
+      users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1});
+    }
   });
 
-  return user;
+  return users;
 }
 
 async function getAllUsers() {
@@ -66,7 +69,7 @@ async function getAllUsers() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name});
+    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1});
   });
 
   return users;
@@ -79,14 +82,53 @@ async function getAllRestaurants() {
 
   userCollection.docs.forEach((doc) => {
     restaurants.push({
-      img: doc.data().imgs[0],
+      imgUrl: doc.data().imgs[0],
       name: doc.data().nome,
       descricao: doc.data().descricao,
-      localizacao: doc.data().localizacao
+      localizacao: doc.data().localizacao,
+      type: 2
     });
   });
 
   return restaurants;
 }
 
-export {cloudStorage ,db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants };
+async function getRandom() {
+  let all = [];
+  let finalVet = [];
+  let auxVet = [];
+
+  let userCollection = await db.collection('users').get();
+
+  userCollection.docs.forEach((doc) => {
+    all.push({imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1});
+  });
+
+  let restaurantCollection = await db.collection('restaurantes').get();
+
+  restaurantCollection.docs.forEach((doc) => {
+    all.push({
+      imgUrl: doc.data().imgs[0],
+      name: doc.data().nome,
+      descricao: doc.data().descricao,
+      localizacao: doc.data().localizacao,
+      type: 2
+    });
+  });
+
+  let i = 0;
+  while (finalVet.length < 5) {
+    if (Math.floor(Math.random() * 5) == 3) {
+      finalVet.push(all[i]);
+    }
+
+    i++;
+
+    if (i == all.length) {
+      i = 0;
+    }
+  }
+  return finalVet;
+}
+
+export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom };

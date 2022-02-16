@@ -38,9 +38,9 @@ export default function Comidas() {
             data={DATA}
             renderItem={({ item }) => (
               <Card item={{
-                image: item.img,
+                image: item.imgUrl,
                 title: (item.descricao + "\n\n" + item.name + "\n" + item.localizacao),
-                cta: "Conhecer"}} horizontal />
+                cta: "Conhecer", type: item.type}} horizontal />
             )}
           />
           )}

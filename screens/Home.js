@@ -1,48 +1,58 @@
-import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
 import { Card } from '../components';
 import articles from '../constants/articles';
-import { } from '../firebase/Database';
+import { getRandom } from '../firebase/Database';
 const { width } = Dimensions.get('screen');
 
-class Home extends React.Component {
-  renderArticles = () => {
-    return (
+export default function Home() {
+
+  const [DATA, setData] = useState(null);
+  const [tam, setTam] = useState(0);
+
+  const getElements = async () => {
+    try {
+      const info = await getRandom();
+      setData(info);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    getElements();
+  }, []);
+
+  return (
+    <Block flex center style={styles.home}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
-        <Block flex>
-          <Card item={articles[0]} horizontal  />
-          <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[2]} />
-          </Block>
-          <Card item={articles[3]} horizontal />
-          <Card item={articles[4]} full />
-        </Block>
+        {(<FlatList
+            data={DATA}
+            renderItem={({ item }) => (
+              <Card item={{
+                image: item.imgUrl,
+                type: item.type,
+                title: (item.type == 2) ? (item.descricao + "\n\n" + item.name + "\n" + item.localizacao) : item.name,
+                cta: "Conhecer"}} horizontal />
+            )}
+          />
+          )}
       </ScrollView>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderArticles()}
-      </Block>
-    );
-  }
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
   home: {
-    width: width,    
+    width: width,
   },
   articles: {
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: theme.SIZES.BASE,
   },
 });
-
-export default Home;

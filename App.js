@@ -10,7 +10,7 @@ import * as Database from "./firebase/Database";
 import restaurantes from "./firebase/getRestaurantes";
 console.log("===========UPDATE===============");
 //console.log(restaurantes);
-LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+LogBox.ignoreLogs(['Setting a timer for a long period of time', 'VirtualizedList']);
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";
 enableScreens();

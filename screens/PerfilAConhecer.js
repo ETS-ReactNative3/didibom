@@ -7,8 +7,7 @@ import {
   ImageBackground,
   Platform,
   TouchableOpacity,
-  FlatList,
-  View
+  FlatList
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { getUserInfo } from "../firebase/Database";
@@ -19,59 +18,18 @@ import { HeaderHeight } from "../constants/utils";
 import { Modal } from 'react-native'
 import CameraPhotoPerfil from "../components/Camera";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from 'expo-image-picker'
-import * as Permissions from 'expo-permissions';
-import * as MediaLibrary from 'expo-media-library';
 
 
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function Perfil({ navigation }) {
-
-
+export default function PerfilAConhecer({ route }) {
   const [openModal, setOpenModal] = useState(false);
+  const [imagem, setImagem] = useState("");
 
-
-  const [DATA, setData] = useState(null);
-
-  let pickerResult;
-
-  function imagePickerCallback() {
-
-  }
-
-  const getElements = async () => {
-    try {
-      const info = await getUserInfo();
-      setData(info);
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-
-    const openImagePickerAsync = async () => {
-      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if (permissionResult.granted === false) {
-        alert("Permission to access camera roll is required!");
-        return;
-      }
-
-      this.pickerResult = await ImagePicker.launchImageLibraryAsync();
-      console.log(pickerResult);
-
-    }
-    async function savePicture() {
-
-    }
-
-  }
-
-  useEffect(() => {
-    getElements();
-  }, []);
+  const { navigation } = useNavigation();
+  const { name, imgUrl } = route.params;
 
   return (
     <Block flex style={styles.perfil}>
@@ -87,43 +45,33 @@ export default function Perfil({ navigation }) {
           >
             <Block flex style={styles.perfilCard}>
               <Block middle style={styles.avatarContainer}>
-                {(<FlatList
-                  data={DATA}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() =>
-                      setOpenModal(true)
-                    }>
-                      <Image
-                        source={{ uri: item.imgUrl }}
-                        style={styles.avatar}
-                      />
-                    </TouchableOpacity>
-                  )}
-                />)}
+                <Image
+                  source={{ uri: imgUrl }}
+                  style={styles.avatar}
+                />
 
-                <View style={{ flex: 1, flexDirection: 'column', alignContent: 'center', height: '100%' }}>
+                <TouchableOpacity onPress={() => {
+                  setOpenModal(true);
+                }}>
                   {openModal &&
                     <Modal
-                      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}
                       animationType="slide"
                       transparent={false}
                       visible={openModal}
                     >
-                      {/*<Button style={{alignSelf: 'center'}} onPress={() => {
-                            openImagePickerAsync();
-                          }} >Galeria</Button>
-                          */}
-                      <Button style={{ alignSelf: 'center' }} onPress={() => {
-                        navigation.navigate("Camera");
-                      }} >Câmera</Button>
-                      <Button style={{ alignSelf: 'center' }} onPress={() => {
-                        setOpenModal(false);
-                      }} >Voltar</Button>
+                      <Text>Um simples texto</Text>
+                      <TouchableOpacity onPress={() => {
 
+                      }}><Text>GALERIA</Text></TouchableOpacity>
+                      <TouchableOpacity onPress={() => {
+                        navigation.navigate("Camera");
+                      }}><Text>CÂMERA</Text></TouchableOpacity>
+                      <TouchableOpacity onPress={() => {
+                        setOpenModal(false);
+                      }}><Text>VOLTAR</Text></TouchableOpacity>
                     </Modal>
                   }
-                </View>
-
+                </TouchableOpacity>
               </Block>
               <Block style={styles.info}>
                 <Block
@@ -184,14 +132,10 @@ export default function Perfil({ navigation }) {
               </Block>
               <Block flex>
                 <Block middle style={styles.nameInfo}>
-                  {(<FlatList
-                    data={DATA}
-                    renderItem={({ item }) => (
-                      <Text bold size={28} color="#32325D">
-                        {item.name}
-                      </Text>
-                    )}
-                  />)}
+
+                  <Text bold size={28} color="#32325D">
+                    {name}
+                  </Text>
 
                   <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
                     Luanda, Angola
@@ -296,20 +240,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: thumbMeasure,
     height: thumbMeasure
-  },
-  btnCameras: {
-    backgroundColor: argonTheme.COLORS.DEFAULT,
-    marginBottom: 10,
-    padding: 20
-
-  },
-  btnModal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-
-  },
-  modalText: {
-    color: 'white'
   }
 });

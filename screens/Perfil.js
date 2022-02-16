@@ -132,19 +132,6 @@ export default function Perfil({ navigation }) {
                   space="evenly"
                   style={{ marginTop: 20, paddingBottom: 24 }}
                 >
-
-                  <Button
-                    small
-                    style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
-                  >
-                    CONECTAR
-                  </Button>
-                  <Button
-                    small
-                    style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                  >
-                    MENSAGEM
-                  </Button>
                 </Block>
                 <Block row space="between">
                   <Block middle>

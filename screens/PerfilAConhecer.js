@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Platform,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { getUserInfo } from "../firebase/Database";
@@ -29,7 +30,7 @@ export default function PerfilAConhecer({ route }) {
   const [imagem, setImagem] = useState("");
 
   const { navigation } = useNavigation();
-  const { name, imgUrl } = route.params;
+  const { name, imgUrl, email } = route.params;
 
   return (
     <Block flex style={styles.perfil}>
@@ -50,28 +51,6 @@ export default function PerfilAConhecer({ route }) {
                   style={styles.avatar}
                 />
 
-                <TouchableOpacity onPress={() => {
-                  setOpenModal(true);
-                }}>
-                  {openModal &&
-                    <Modal
-                      animationType="slide"
-                      transparent={false}
-                      visible={openModal}
-                    >
-                      <Text>Um simples texto</Text>
-                      <TouchableOpacity onPress={() => {
-
-                      }}><Text>GALERIA</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => {
-                        navigation.navigate("Camera");
-                      }}><Text>CÂMERA</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => {
-                        setOpenModal(false);
-                      }}><Text>VOLTAR</Text></TouchableOpacity>
-                    </Modal>
-                  }
-                </TouchableOpacity>
               </Block>
               <Block style={styles.info}>
                 <Block
@@ -90,8 +69,10 @@ export default function PerfilAConhecer({ route }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
+                    onPress={() => Linking.openURL('mailto:'+email+'?subject=Conheci-te pelo didibom '+name+'!&body=Vamos nos conectar!') }
+                    title="Conheci-te pelo didibom!"
                   >
-                    MENSAGEM
+                    Contactar 
                   </Button>
                 </Block>
                 <Block row space="between">

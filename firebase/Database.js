@@ -43,7 +43,8 @@ function newUser(userId, name, email, imageUrl) {
       userId: auth.currentUser.uid,
       name: name,
       email: email,
-      imgUrl: "https://www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg"
+      imgUrl: "https://www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg",
+      conexoes: 0
     })
 }
 
@@ -55,7 +56,7 @@ async function getUserInfo(userId = auth.currentUser.uid) {
   userCollection.docs.forEach((doc) => {
 
     if (doc.data().userId == userId) {
-      users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1});
+      users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1 });
     }
   });
 
@@ -68,7 +69,7 @@ async function getAllUsers() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1});
+    users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
   });
 
   return users;
@@ -95,12 +96,11 @@ async function getAllRestaurants() {
 async function getRandom() {
   let all = [];
   let finalVet = [];
-  let auxVet = [];
 
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    all.push({imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1});
+    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
   });
 
   let restaurantCollection = await db.collection('restaurantes').get();
@@ -130,4 +130,31 @@ async function getRandom() {
   return finalVet;
 }
 
-export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom };
+async function getRandomPeople(x) {
+  let all = [];
+  let finalVet = [];
+
+  let userCollection = await db.collection('users').get();
+
+  userCollection.docs.forEach((doc) => {
+    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1 });
+  });
+
+  let i = 0;
+
+  while (finalVet.length < x) {
+    if (Math.floor(Math.random() * 5) == 3) {
+      finalVet.push(all[i]);
+    }
+
+    i++;
+
+    if (i == all.length) {
+      i = 0;
+    }
+  }
+
+  return finalVet;
+}
+
+export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom, getRandomPeople };

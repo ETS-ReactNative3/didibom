@@ -1,5 +1,5 @@
-import React, { useState, shouldComponentUpdate } from "react";
-import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Modal, Pressable, View } from "react-native";
+import React, { useState, useEffect, shouldComponentUpdate } from "react";
+import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Modal, Pressable, View, FlatList } from "react-native";
 // Galio components
 import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
@@ -7,6 +7,7 @@ import { argonTheme, tabs } from "../constants";
 import { Button, Select, Icon, Input, Header, Switch, Card, ModalComponent } from "../components";
 
 import { useNavigation } from "@react-navigation/native";
+import {getRandomPeople} from "../firebase/Database";
 
 import articles from '../constants/articles';
 
@@ -16,6 +17,25 @@ export default function Schedule({ route }) {
 
   const { navigation } = useNavigation();
   const { name, imgUrl } = route.params;
+
+  const [dataInPar, setDataInPar] = useState("");
+  const [DATA, setData] = useState(null);
+  const [rand, setRand] = useState(6);
+
+  const getElements = async () => {
+    try {
+      const info = await getRandomPeople(rand);
+      setData(info);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    getElements();
+  }, []);
+
 
   return (
     <Block flex center>
@@ -40,8 +60,11 @@ export default function Schedule({ route }) {
               <Select
                 style={{ paddingTop: 14, paddingBottom: 14, backgroundColor: argonTheme.COLORS.ICON }}
                 defaultIndex={1}
-                options={["01", "02", "03", "04", "05", "06"]}
-                onValueChange={console.log(5)}
+                options={["1", "2", "3", "4", "5", "6"]}
+                onValueChange={(num) => {
+                  getElements();
+                  setRand(parseInt(num, 10));
+                }}
 
               >
               </Select>
@@ -70,8 +93,22 @@ export default function Schedule({ route }) {
             </Button>
           </Block>
 
+
+
         </Block>
+
         <Block flex style={styles.group}>
+          <Block>
+            {(<FlatList
+              data={DATA}
+              renderItem={({ item }) => (
+                <Text style={{alignItems: 'center', justifyContent: 'center', alignSelf: 'center'}}>
+                  {item.name}
+                </Text>
+              )}
+            />
+            )}
+          </Block>
           <Text bold size={16} style={styles.title}>
             Social
           </Text>

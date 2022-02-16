@@ -15,7 +15,6 @@ function CustomDrawerContent({ drawerPosition, navigation, perfil, focused, stat
   const screens = [
     "Home", 
     "Perfil",
-    "Conta",
     "Logout"
   ];
 

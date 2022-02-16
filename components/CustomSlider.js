@@ -1,0 +1,24 @@
+import * as React from 'react';
+import { Dimensions, View } from "react-native";
+import Carousel from "react-native-snap-carousel";
+import CarouselItem from "./CarouselItem";
+import styles from "./styles";
+
+
+
+const { width } = Dimensions.get("window");
+export default function CustomSlider({ data }) {
+  const settings = {
+    sliderWidth: width,
+    sliderHeight: width,
+    itemWidth: width,
+    data: data,
+    renderItem: CarouselItem,
+    hasParallaxImages: true,
+  };
+  return (
+    <View style={styles.container}>
+      <Carousel {...settings} />
+    </View>
+  );
+}

@@ -9,10 +9,19 @@ import { Button, Select, Icon, Input, Header, Switch, Card, ModalComponent } fro
 import { useNavigation } from "@react-navigation/native";
 
 import articles from '../constants/articles';
+import data from "../assets/data";
+import CustomSlider from "../components/CustomSlider";
+import { useEffect } from "react";
 
 const { width } = Dimensions.get("screen");
 
+
+
 export default function Schedule({ route }) {
+
+  useEffect(() => {
+
+  },[]);
 
   const { navigation } = useNavigation();
   const { name, imgUrl } = route.params;
@@ -24,6 +33,11 @@ export default function Schedule({ route }) {
 
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Card item={{ image: imgUrl, title: name, type: 2, cta: "⭐⭐⭐⭐⭐" }} full />
+
+          </Block>
+
+          <Block style={{paddingHorizontal: theme.SIZES.BASE}}>
+            <CustomSlider data={data}/>
 
           </Block>
           <Block row space="evenly"

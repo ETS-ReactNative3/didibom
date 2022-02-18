@@ -57,10 +57,11 @@ async function getUserInfo(userId = auth.currentUser.uid) {
 
     if (doc.data().userId == userId) {
       users.push({imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1});
+
     }
   });
 
-  return users;
+  return users[0];
 }
 
 async function getAllUsers() {
@@ -83,6 +84,7 @@ async function getAllRestaurants() {
   userCollection.docs.forEach((doc) => {
     restaurants.push({
       imgUrl: doc.data().imgs[0],
+      imagens: doc.data().imgs.slice(1),
       name: doc.data().nome,
       descricao: doc.data().descricao,
       localizacao: doc.data().localizacao,
@@ -131,4 +133,4 @@ async function getRandom() {
   return finalVet;
 }
 
-export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom };
+export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom, cloudStorage };

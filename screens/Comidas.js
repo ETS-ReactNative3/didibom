@@ -39,6 +39,7 @@ export default function Comidas() {
             renderItem={({ item }) => (
               <Card item={{
                 image: item.imgUrl,
+                imagens: item.imagens,
                 title: (item.descricao + "\n\n" + item.name + "\n" + item.localizacao),
                 cta: "Conhecer", type: item.type}} horizontal />
             )}

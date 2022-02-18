@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
+import { cloudStorage, db } from "../firebase/Database";
 
 
 const { width, height } = Dimensions.get("screen");
@@ -31,47 +32,100 @@ const thumbMeasure = (width - 48 - 32) / 3;
 export default function Perfil({ navigation }) {
 
 
+  const [imagem, setImagem] = useState(null);
+  const [no, setNo] = useState("");
+
   const [openModal, setOpenModal] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
 
   const [DATA, setData] = useState(null);
 
-  let pickerResult;
 
-  function imagePickerCallback() {
-
-  }
-
-  const getElements = async () => {
-    try {
-      const info = await getUserInfo();
-      setData(info);
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-
-    const openImagePickerAsync = async () => {
-      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if (permissionResult.granted === false) {
-        alert("Permission to access camera roll is required!");
-        return;
-      }
-
-      this.pickerResult = await ImagePicker.launchImageLibraryAsync();
-      console.log(pickerResult);
-
-    }
-    async function savePicture() {
-
-    }
-
-  }
 
   useEffect(() => {
     getElements();
   }, []);
+
+  const pickImage = async () => {
+
+    //Abrir a câmeraz
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+    })
+
+    if (!result.cancelled) {
+      console.log(result.uri)
+      setImagem(result.uri);
+      setNo(result.uri);
+      console.log("no, ", no);
+      console.log(imagem + "ohoo")
+      //uploadImage();
+    }
+  }
+
+  const uploadImage = async () => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+
+      xhr.responseType = "blob";
+      xhr.open("GET", image, true);
+      xhr.send(null);
+    });
+
+    const ref = cloudStorage.ref().child(new Date().toISOString());
+    console.log("d||||b: ", db.TaskEvent);
+    ref.put(blob).then((snapshot) => {
+      console.log("Uploaded")
+    })
+
+    /*snapshot.on(
+      db.firebase.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploading(true);
+      },
+      (error) => {
+        setUploading(false);
+        console.log(error);
+        blob.close();
+        return;
+      }
+    )
+    */
+
+
+    //const ref = cloudStorage.ref().child(new Date().toISOString());
+
+
+  }
+
+
+  const getElements = async () => {
+    try {
+      const info = await getUserInfo();
+      console.log("Data" + DATA.imgUrl);
+      console.log("\n")
+      setData(info);
+      setData(info);
+      setData(info);
+      setData(info);
+
+      console.log("Data" + DATA.imgUrl);
+      console.log("INFO" + info);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
 
   return (
     <Block flex style={styles.perfil}>
@@ -87,42 +141,42 @@ export default function Perfil({ navigation }) {
           >
             <Block flex style={styles.perfilCard}>
               <Block middle style={styles.avatarContainer}>
-                {(<FlatList
-                  data={DATA}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() =>
-                      setOpenModal(true)
-                    }>
-                      <Image
-                        source={{ uri: item.imgUrl }}
-                        style={styles.avatar}
-                      />
-                    </TouchableOpacity>
-                  )}
-                />)}
 
-                <View style={{ flex: 1, flexDirection: 'column', alignContent: 'center', height: '100%' }}>
-                  {openModal &&
-                    <Modal
-                      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}
-                      animationType="slide"
-                      transparent={false}
-                      visible={openModal}
-                    >
-                      {/*<Button style={{alignSelf: 'center'}} onPress={() => {
+                <TouchableOpacity onPress={() => {
+                  setOpenModal(true)
+                  //console.log(openModal)
+                }
+                }>
+                  <Image
+                    source={{ uri: "" }}
+                    style={styles.avatar}
+                  />
+                </TouchableOpacity>
+
+                {openModal &&
+                  <Modal
+                    style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
+                    animationType="slide"
+                    transparent={false}
+                    visible={openModal}
+                  >
+                    {/*<Button style={{alignSelf: 'center'}} onPress={() => {
                             openImagePickerAsync();
                           }} >Galeria</Button>
                           */}
-                      <Button style={{ alignSelf: 'center' }} onPress={() => {
-                        navigation.navigate("Camera");
-                      }} >Câmera</Button>
-                      <Button style={{ alignSelf: 'center' }} onPress={() => {
-                        setOpenModal(false);
-                      }} >Voltar</Button>
+                    <Button style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }} onPress={() => {
+                      navigation.navigate("Camera");
+                    }} >Câmera</Button>
 
-                    </Modal>
-                  }
-                </View>
+                    <Button style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
+                      onPress={pickImage}>Galeria</Button>
+                    <Button style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }} onPress={() => {
+                      setOpenModal(false);
+                    }} >Voltar</Button>
+
+                  </Modal>
+                }
+
 
               </Block>
               <Block style={styles.info}>

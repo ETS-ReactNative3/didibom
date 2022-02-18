@@ -58,15 +58,11 @@ export default function Schedule({ route }) {
             <Block card={true} borderless={true} title="Nossos Preços" style={{ backgroundColor: 'white', padding: 10, paddingTop: 20 }} shadow={true}
             >
               
-            <Icon
-                    size={11}
-                    style={{ marginRight: 10 }}
-                    color={argonTheme.COLORS.ICON}
-                    name="time-2624"
-                    family="FontAwesome"
-                  />
-              <Text p>seg - sex 2500/Pessoa</Text>
-              <Text>Variam de acordo a nossa capacidade</Text>
+              
+              <Text p style={{marginBottom: 15}}>Abertos agora ✅ </Text>
+              <Text p style={{marginBottom: 5}}>seg - sex: 8h-22h</Text>
+              <Text p>sab - dom: 8h-00h</Text>
+
             </Block>
 
           </Block>
@@ -95,7 +91,7 @@ export default function Schedule({ route }) {
                 marginRight={50}
                 style={{paddingTop: 14, paddingBottom: 14}}
                 defaultIndex={1}
-                opPessoasPessoasPessoastions={["01", "02", "03", "04", "05", "06"]}
+                options={["01", "02", "03", "04", "05", "06"]}
                 onValueChange={(value) => console.log(value)}
               >
               </Select>

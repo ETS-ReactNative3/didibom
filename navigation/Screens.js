@@ -19,6 +19,7 @@ import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
 import Comidas from "../screens/Comidas";
 import Pessoas from "../screens/Pessoas";
+import Aleatorio from "../screens/Aleatorio";
 import Login from "../screens/Login";
 import FirstStep from "../screens/FirstStep";
 import SecondStep from "../screens/SecondStep";
@@ -297,6 +298,22 @@ function HomeStack(props) {
           header: ({ navigation, scene }) => (
             <Header
               title="Comida"
+              options
+              search
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Aleatorio"
+        component={Aleatorio}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Aleatorio"
               options
               search
               navigation={navigation}

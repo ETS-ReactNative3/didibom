@@ -48,6 +48,14 @@ function newUser(userId, name, email, imageUrl) {
     })
 }
 
+export function newConnection(userId2, userId1 = auth.currentUser.uid) {
+  db.collection('connections').doc(userId1 + "" + userId2)
+    .set({
+      userId1: userId1,
+      userId2: userId2
+    })
+}
+
 async function getUserInfo(userId = auth.currentUser.uid) {
   let users = [];
 
@@ -130,6 +138,34 @@ async function getRandom() {
   return finalVet;
 }
 
+
+async function getRandomItem() {
+  let all = [];
+  let finalVet = [];
+
+  let userCollection = await db.collection('users').get();
+
+  userCollection.docs.forEach((doc) => {
+    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
+  });
+
+  let restaurantCollection = await db.collection('restaurantes').get();
+
+  restaurantCollection.docs.forEach((doc) => {
+    all.push({
+      imgUrl: doc.data().imgs[0],
+      name: doc.data().nome,
+      descricao: doc.data().descricao,
+      localizacao: doc.data().localizacao,
+      type: 2
+    });
+  });
+
+  finalVet.push(all[Math.floor(Math.random() * all.length)]);
+
+  return finalVet;
+}
+
 async function getRandomPeople(x) {
   let all = [];
   let finalVet = [];
@@ -157,4 +193,4 @@ async function getRandomPeople(x) {
   return finalVet;
 }
 
-export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom, getRandomPeople };
+export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom, getRandomPeople, getRandomItem };

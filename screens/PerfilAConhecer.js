@@ -11,26 +11,26 @@ import {
   Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { getUserInfo } from "../firebase/Database";
+import { getUserInfo, newConnection } from "../firebase/Database";
 
 import { Button } from "../components";
 import { Images, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import { Modal } from 'react-native'
-import CameraPhotoPerfil from "../components/Camera";
 import { useNavigation } from "@react-navigation/native";
 
 
 const { width, height } = Dimensions.get("screen");
 
+function conectar(userId) {
+  newConnection(userId);
+}
+
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function PerfilAConhecer({ route }) {
-  const [openModal, setOpenModal] = useState(false);
-  const [imagem, setImagem] = useState("");
+export default function PerfilAConhecer({ route }) {s
 
   const { navigation } = useNavigation();
-  const { name, imgUrl, email } = route.params;
+  const { userId, name, imgUrl, email } = route.params;
 
   return (
     <Block flex style={styles.perfil}>

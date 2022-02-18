@@ -24,14 +24,16 @@ class Card extends React.Component {
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate(
           (item.type == 1) ? 'PerfilAConhecer' : 'Schedule',
-          { imgUrl: item.image, name: item.title, email: (item.type == 1) ? item.email : null })}>
+          { imgUrl: item.image, name: item.title, email: (item.type == 1) ? item.email : null,
+            userId: (item.type == 1) ? item.userId : null })}>
           <Block flex style={imgContainer}>
             <Image source={{ uri: item.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate(
           (item.type == 1) ? 'PerfilAConhecer' : 'Schedule',
-          { imgUrl: item.image, name: item.title, email: (item.type == 1) ? item.email : null })}>
+          { imgUrl: item.image, name: item.title, email: (item.type == 1) ? item.email : null,
+            userId: (item.type == 1) ? item.userId : null })}>
         <Block flex space="between" style={styles.cardDescription}>
           <Text size={14} style={styles.cardTitle}>{item.title}</Text>
           <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>{item.cta}</Text>

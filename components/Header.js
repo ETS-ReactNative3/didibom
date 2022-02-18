@@ -110,10 +110,16 @@ class Header extends React.Component {
             <Text size={16} style={styles.tabTitle}>{optionLeft || 'Pessoas'}</Text>
           </Block>
         </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Comidas')}>
+        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Comidas')}>
           <Block row middle>
             <Icon size={16} name="restaurant" family="FontAwesomeExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
             <Text size={16} style={styles.tabTitle}>{optionRight || 'Comida'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={[styles.tab, styles.dice]} onPress={() => navigation.navigate('Aleatorio')}>
+          <Block row left>
+            <Icon size={16} name="casino" family="FontAwesomeExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
+            <Text size={16} style={styles.tabTitle}>{optionRight || 'Aleatório'}</Text>
           </Block>
         </Button>
       </Block>
@@ -248,7 +254,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     backgroundColor: theme.COLORS.TRANSPARENT,
-    width: width * 0.35,
+    width: width * 0.3,
     borderRadius: 0,
     borderWidth: 0,
     height: 24,

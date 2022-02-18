@@ -13,6 +13,8 @@ import {
 import { Block, Text, theme } from "galio-framework";
 import { getUserInfo } from "../firebase/Database";
 
+// Alteração para commit
+
 import { Button } from "../components";
 import { Images, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";

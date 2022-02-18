@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
-import { db, auth } from '../firebase/Database';
+import { db, auth, cloudStorage } from '../firebase/Database';
 
 
 export default function CameraPhotoPerfil() {
@@ -17,8 +17,11 @@ export default function CameraPhotoPerfil() {
   const [hasPermission, setHasPermission] = useState(null);
   const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
 
   useEffect(() => {
+
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted')
@@ -54,20 +57,43 @@ export default function CameraPhotoPerfil() {
     const asset = await MediaLibrary.createAssetAsync(capturedPhoto)
       .then(() => {
         alert("Salvo com sucesso")
+        
+        
+        //console.log(filename)
+        //console.log("ohoo");
 
+        setUploading(true);
 
-        db.collection('users').doc(auth.currentUser.uid)
+        
+
+        
+        /*db.collection('users').doc(auth.currentUser.uid)
           .update({
             imgUrl: capturedPhoto
           }).then(() => {
             console.log("Document successfully updated!");
         })
+        */
 
 
       })
       .catch((error) => {
         console.log('err', error)
       })
+
+      try {
+        //cloudStorage.ref(filename).putFile(uploadUri);
+        const uploadUri = capturedPhoto;
+
+        let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+        let r = cloudStorage.ref().child(filename);
+        console.log(r.putFile());
+        setUploading(false);
+        
+        alert("Image uploaded");
+      } catch (e) {
+        console.log(e)
+      }
   }
 
   return (
@@ -77,7 +103,7 @@ export default function CameraPhotoPerfil() {
         type={typeCamera}
         ref={camRef}
       >
-        <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row' }}>
+        <View style={styles.btnCameras}>
           <TouchableOpacity style={{
             position: 'absolute',
             bottom: 20,
@@ -96,6 +122,8 @@ export default function CameraPhotoPerfil() {
 
       </Camera>
       <TouchableOpacity
+
+        style = {styles.btnCameras}
         onPress={() => {
           takePicture();
         }}
@@ -141,5 +169,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+    alignContent: 'center'
   },
+  btnCameras: {
+    color: 'white',
+    padding: 20,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    margin: 'auto'
+  }
 });

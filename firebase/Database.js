@@ -33,6 +33,7 @@ if (Firebase.apps.length === 0) {
   app = Firebase.app();
 }
 
+const cloudStorage = app.storage();
 //const app = Firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
 const db = Firebase.firestore(app);

@@ -425,6 +425,7 @@ function AppStack(props) {
       <Drawer.Screen name="Articles" component={ArticlesStack} />
       <Drawer.Screen name="Camera" component={CameraStack} />
 
+
     </Drawer.Navigator>
   );
 }

@@ -12,7 +12,6 @@ import {getRandomPeople} from "../firebase/Database";
 import articles from '../constants/articles';
 import data from "../assets/data";
 import CustomSlider from "../components/CustomSlider";
-import { useEffect } from "react";
 
 const { width } = Dimensions.get("screen");
 

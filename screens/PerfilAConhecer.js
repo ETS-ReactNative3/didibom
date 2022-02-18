@@ -27,7 +27,7 @@ function conectar(userId) {
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function PerfilAConhecer({ route }) {s
+export default function PerfilAConhecer({ route }) {
 
   const { navigation } = useNavigation();
   const { userId, name, imgUrl, email } = route.params;
@@ -63,16 +63,17 @@ export default function PerfilAConhecer({ route }) {s
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
+                    onPress={() => conectar(userId)}
                   >
                     CONECTAR
                   </Button>
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                    onPress={() => Linking.openURL('mailto:'+email+'?subject=Conheci-te pelo didibom '+name+'!&body=Vamos nos conectar!') }
+                    onPress={() => Linking.openURL('mailto:' + email + '?subject=Conheci-te pelo didibom ' + name + '!&body=Vamos nos conectar!')}
                     title="Conheci-te pelo didibom!"
                   >
-                    Contactar 
+                    Contactar
                   </Button>
                 </Block>
                 <Block row space="between">

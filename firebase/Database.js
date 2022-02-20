@@ -61,7 +61,7 @@ async function getUserInfo(userId = auth.currentUser.uid) {
     }
   });
 
-  return users[0];
+  return users;
 }
 
 async function getAllUsers() {

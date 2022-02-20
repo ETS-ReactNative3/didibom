@@ -136,15 +136,16 @@ export default function Perfil({ navigation }) {
                 >
 
                   <Button
-                  onPress={() => {alert("Hello world")}}
+                    onPress={() => { alert("Hello world") }}
                     small
-                    style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
+                    style={{ backgroundColor: argonTheme.COLORS.PRIMARY, width: '40%' }}
                   >
-                    
+                    CONECTAR
                   </Button>
                   <Button
-                    medium
-                    style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
+
+                    small
+                    style={{ backgroundColor: argonTheme.COLORS.DEFAULT, width: '40%' }}
                     onPress={() => {
                       navigation.navigate("Chat", {
                         userImg: DATA[0].imgUrl
@@ -162,7 +163,7 @@ export default function Perfil({ navigation }) {
                       color="#525F7F"
                       style={{ marginBottom: 4 }}
                     >
-                      0
+
                     </Text>
                     <Text size={12} color={argonTheme.COLORS.TEXT}>Conexões</Text>
                   </Block>

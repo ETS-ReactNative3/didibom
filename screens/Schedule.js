@@ -1,5 +1,5 @@
-import React, { useState, useEffect, shouldComponentUpdate } from "react";
-import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Modal, Pressable, View, FlatList } from "react-native";
+import React, { useState, shouldComponentUpdate } from "react";
+import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Modal, Pressable, View, ImageBackground } from "react-native";
 // Galio components
 import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
@@ -19,12 +19,13 @@ const { width } = Dimensions.get("screen");
 
 export default function Schedule({ route }) {
 
-  useEffect(() => {
-
-  },[]);
 
   const { navigation } = useNavigation();
-  const { name, imgUrl } = route.params;
+  const { name, imgUrl, imagens } = route.params;
+
+  useEffect(() => {
+    console.log(imagens);
+  }, []);
 
   const [dataInPar, setDataInPar] = useState("");
   const [DATA, setData] = useState(null);
@@ -55,23 +56,59 @@ export default function Schedule({ route }) {
 
           </Block>
 
-          <Block style={{paddingHorizontal: theme.SIZES.BASE}}>
-            <CustomSlider data={data}/>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Text
+              h3
+              style={{ marginBottom: theme.SIZES.BASE - 30, marginTop: theme.SIZES.BASE }}
+              color={argonTheme.COLORS.DEFAULT}
+            >
+              Nossa galeria
+            </Text>
+            <CustomSlider data={imagens} />
+
+            <Text
+              h3
+              style={{ marginBottom: theme.SIZES.BASE - 10, marginTop: theme.SIZES.BASE }}
+              color={argonTheme.COLORS.DEFAULT}
+            >
+              Horários
+            </Text>
+
+            <Block card={true} borderless={true} title="Nossos Preços" style={{ backgroundColor: 'white', padding: 10, paddingTop: 20 }} shadow={true}
+            >
+              
+              
+              <Text p style={{marginBottom: 15}}>Abertos agora ✅ </Text>
+              <Text p style={{marginBottom: 5}}>seg - sex: 8h-22h</Text>
+              <Text p>sab - dom: 8h-00h</Text>
+
+            </Block>
 
           </Block>
+
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Text
+              h3
+              style={{ marginBottom: theme.SIZES.BASE - 10, marginTop: theme.SIZES.BASE }}
+              color={argonTheme.COLORS.DEFAULT}
+            >
+              Reserva
+            </Text>
+          </Block>
+
+
+
           <Block row space="evenly"
             style={{ flex: 1, flexDirection: 'row' }}
           >
-            <Block flex right style={{ marginTop: 8, }}>
-              <Text
-                style={{ marginRight: 40, marginBottom: theme.SIZES.BASE / 2 }}
-                color={argonTheme.COLORS.DEFAULT}
-              >
-                Pessoas
-              </Text>
+            <Block 
+              flex row center alignItems={'center'} justifyContent={'center'}
+              marginHorizontal={theme.SIZES.BASE}
+               style={{ paddingHorizontal: theme.SIZES.BASE}}>
 
               <Select
-                style={{ paddingTop: 14, paddingBottom: 14, backgroundColor: argonTheme.COLORS.ICON }}
+                marginRight={50}
+                style={{paddingTop: 14, paddingBottom: 14}}
                 defaultIndex={1}
                 options={["1", "2", "3", "4", "5", "6"]}
                 onValueChange={(num) => {
@@ -81,10 +118,9 @@ export default function Schedule({ route }) {
 
               >
               </Select>
-            </Block>
 
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 27 }}>
               <Input
+                marginLeft={50}
                 placeholder="DD MM HH:MM"
                 iconContent={
                   <Icon
@@ -96,12 +132,15 @@ export default function Schedule({ route }) {
                   />
                 }
               />
-            </Block>
 
+            </Block>
 
           </Block>
           <Block center>
-            <Button color="default" style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
+            <Button color='default' style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
+              Convidar Amigos
+            </Button>
+            <Button backgroundColor={argonTheme.COLORS.ICON} style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
               Concluir Agendamento
             </Button>
           </Block>
@@ -229,14 +268,14 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 });
-/* 
+/*
 const ModalComponent = () => {
   const modalVisible = false;
   function setModalVisible(valor) {
     modalVisible = valor;
   }
   return (
-    
+
     <View style={stylesModal.centeredView}>
       <Modal
         animationType="slide"

@@ -98,7 +98,7 @@ async function getUserInfo(userId = auth.currentUser.uid) {
     }
   });
 
-  return users;
+  return users[0];
 }
 
 async function getAllUsers() {
@@ -121,6 +121,7 @@ async function getAllRestaurants() {
   userCollection.docs.forEach((doc) => {
     restaurants.push({
       imgUrl: doc.data().imgs[0],
+      imagens: doc.data().imgs.slice(1),
       name: doc.data().nome,
       descricao: doc.data().descricao,
       localizacao: doc.data().localizacao,
@@ -138,7 +139,7 @@ async function getRandom() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
+    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email, userId: doc.data().userId });
   });
 
   let restaurantCollection = await db.collection('restaurantes').get();

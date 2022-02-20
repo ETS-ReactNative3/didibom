@@ -44,7 +44,14 @@ export default function Pessoas() {
           {(<FlatList
             data={DATA}
             renderItem={({ item }) => (
-              <Card item={{ email: item.email, image: item.imgUrl, title: item.name, type: item.type, cta: "Conhecer", userId: item.userId }} horizontal />
+              <Card item={{
+                email: item.email,
+                image: item.imgUrl,
+                title: item.name,
+                type: item.type,
+                cta: "Conhecer",
+                userId: item.userId
+              }} horizontal />
             )}
           />
           )}

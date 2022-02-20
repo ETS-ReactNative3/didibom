@@ -30,6 +30,7 @@ class DrawerItem extends React.Component {
           />
         );*/
       /*
+      */
     case "Articles":
       return (
         <Icon
@@ -39,7 +40,7 @@ class DrawerItem extends React.Component {
           color={focused ? "white" : argonTheme.COLORS.PRIMARY}
         />
       );
-      */
+      
       case "Perfil":
         return (
           <Icon

@@ -26,6 +26,8 @@ import SecondStep from "../screens/SecondStep";
 import ThirdStep from "../screens/ThirdStep";
 import CameraPhotoPerfil from "../components/Camera";
 import PerfilAConhecer from "../screens/PerfilAConhecer";
+import Notificacoes from "../screens/Notificacoes";
+import Chat from '../screens/ChatScreen'
 
 
 // drawer
@@ -218,6 +220,23 @@ function PerfilStack(props) {
           headerTransparent: true
         }}
       />
+
+<Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true
+        }}
+      />
       <Stack.Screen
         name="Pro"
         component={Pro}
@@ -349,7 +368,20 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
+
+      <Stack.Screen
+        name="Notificacoes"
+        component={Notificacoes}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Notificacoes" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
+
+
   );
 }
 

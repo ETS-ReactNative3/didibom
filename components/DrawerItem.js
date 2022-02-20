@@ -31,16 +31,16 @@ class DrawerItem extends React.Component {
         );*/
       /*
       */
-    case "Articles":
-      return (
-        <Icon
-          name="spaceship"
-          family="ArgonExtra"
-          size={14}
-          color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-        />
-      );
-      
+      case "Articles":
+        return (
+          <Icon
+            name="spaceship"
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
+          />
+        );
+
       case "Perfil":
         return (
           <Icon
@@ -90,7 +90,7 @@ class DrawerItem extends React.Component {
               .signOut()
               .then(() => {
                 alert("Está a terminar a sessão!");
-                
+
                 navigation.replace("Login");
               })
               .catch(error => alert(error.message));

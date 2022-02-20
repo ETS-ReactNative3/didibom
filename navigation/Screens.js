@@ -25,6 +25,7 @@ import SecondStep from "../screens/SecondStep";
 import ThirdStep from "../screens/ThirdStep";
 import CameraPhotoPerfil from "../components/Camera";
 import PerfilAConhecer from "../screens/PerfilAConhecer";
+import Notificacoes from "../screens/Notificacoes";
 
 
 // drawer
@@ -332,7 +333,20 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
+
+      <Stack.Screen
+        name="Notificacoes"
+        component={Notificacoes}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Notificacoes" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
+
+
   );
 }
 

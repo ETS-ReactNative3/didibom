@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -25,11 +25,24 @@ const thumbMeasure = (width - 48 - 32) / 3;
 export default function PerfilAConhecer({ route, navigation }) {
 
   const { userId, name, imgUrl, email } = route.params;
+  const [DATA, setDATA] = useState(null);
+
+  const getElements = async () => {
+    try {
+      const info = await getUserInfo();
+      setDATA(info);
+      console.log("no peril" + DATA)
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
 
   const conectar = (u) => {
     newConnection(u);
     alert("Pedido de conexão enviado!")
   }
+
 
   return (
     <Block flex style={styles.perfil}>
@@ -80,12 +93,14 @@ export default function PerfilAConhecer({ route, navigation }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                    onPress={()=> navigation.navigate('Chat')}
+                    onPress={() => navigation.navigate('Chat', {
+                      userImg: DATA[0].imrUrl
+                    })}
                   >
                     MENSAGEM
                   </Button>
 
-                  
+
                 </Block>
                 <Block row space="between">
                   <Block middle>

@@ -21,6 +21,20 @@ const BellButton = ({isWhite, style, navigation}) => (
     />
     <Block middle style={styles.notify} />
   </TouchableOpacity>
+
+);
+
+const ChatButton = ({isWhite, style, navigation}) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Notificacoes')}>
+    <Icon
+      family="ArgonExtra"
+      size={16}
+      name="bell"
+      color={argonTheme.COLORS[isWhite ? 'WHITE' : 'ICON']}
+    />
+    <Block middle style={styles.notify} />
+  </TouchableOpacity>
+
 );
 
 const SearchButton = ({isWhite, style, navigation}) => (
@@ -52,6 +66,7 @@ class Header extends React.Component {
       case 'Home':
         return ([
           <BellButton key='chat-home' navigation={navigation} isWhite={white} />
+          
         ]);
       /*case 'Deals':
         return ([

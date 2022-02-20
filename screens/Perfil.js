@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
+import { useLayoutEffect } from "react";
 
 
 const { width, height } = Dimensions.get("screen");
@@ -46,6 +47,7 @@ export default function Perfil({ navigation }) {
     try {
       const info = await getUserInfo();
       setData(info);
+      console.log("no peril" + DATA)
     } catch (error) {
       console.log(error);
     } finally {
@@ -69,7 +71,7 @@ export default function Perfil({ navigation }) {
 
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getElements();
   }, []);
 
@@ -134,14 +136,20 @@ export default function Perfil({ navigation }) {
                 >
 
                   <Button
+                  onPress={() => {alert("Hello world")}}
                     small
                     style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
                   >
-                    CONECTAR
+                    
                   </Button>
                   <Button
-                    small
+                    medium
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
+                    onPress={() => {
+                      navigation.navigate("Chat", {
+                        userImg: DATA[0].imgUrl
+                      });
+                    }}
                   >
                     MENSAGEM
                   </Button>

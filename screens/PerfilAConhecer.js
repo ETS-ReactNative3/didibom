@@ -24,11 +24,11 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default function PerfilAConhecer({ route }) {
+export default function PerfilAConhecer({ route, navigation }) {
   const [openModal, setOpenModal] = useState(false);
   const [imagem, setImagem] = useState("");
 
-  const { navigation } = useNavigation();
+  //const { navigation } = useNavigation();
   const { name, imgUrl } = route.params;
 
   return (
@@ -90,6 +90,7 @@ export default function PerfilAConhecer({ route }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
+                    onPress={()=> navigation.navigate('Chat')}
                   >
                     MENSAGEM
                   </Button>

@@ -18,12 +18,7 @@ import { Images, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { useNavigation } from "@react-navigation/native";
 
-
 const { width, height } = Dimensions.get("screen");
-
-function conectar(userId) {
-  newConnection(userId);
-}
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
@@ -31,6 +26,11 @@ export default function PerfilAConhecer({ route }) {
 
   const { navigation } = useNavigation();
   const { userId, name, imgUrl, email } = route.params;
+
+  const conectar = (u) => {
+    newConnection(u);
+    alert("Pedido de conexão enviado!")
+  }
 
   return (
     <Block flex style={styles.perfil}>
@@ -63,7 +63,9 @@ export default function PerfilAConhecer({ route }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
-                    onPress={() => conectar(userId)}
+                    onPress={async () => {
+                      await newConnection(userId);
+                    }}
                   >
                     CONECTAR
                   </Button>

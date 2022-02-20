@@ -49,12 +49,41 @@ function newUser(userId, name, email, imageUrl) {
     })
 }
 
-export function newConnection(userId2, userId1 = auth.currentUser.uid) {
-  db.collection('connections').doc(userId1 + "" + userId2)
-    .set({
-      userId1: userId1,
-      userId2: userId2
-    })
+export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
+
+  let idConnection = userId1 + "" + userId2;
+
+  /* Verificar se existe conexão */
+
+  var connections = [];
+
+  let connectionCollection = await db.collection('connections').get();
+
+  connectionCollection.docs.forEach((doc) => {
+    if (doc.data().idConnection == idConnection) {
+      connections.push({ pending: doc.data().pending });
+    }
+  });
+
+  /* Fim da verificação de conexão */
+
+  if (connections.length == 0) {
+    db.collection('connections').doc(idConnection)
+      .set({
+        idConnection: idConnection,
+        userId1: userId1,
+        userId2: userId2,
+        pending: true,
+      });
+
+    alert("Foi enviado um pedido de conexão!");
+  } else {
+    if (connections[0].pending) {
+      alert("Já enviou um pedido. Aguarde resposta!");
+    } else {
+      alert("Já está conectado");
+    }
+  }
 }
 
 async function getUserInfo(userId = auth.currentUser.uid) {
@@ -78,7 +107,7 @@ async function getAllUsers() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
+    users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email, userId: doc.data().userId });
   });
 
   return users;

@@ -220,23 +220,6 @@ function PerfilStack(props) {
           headerTransparent: true
         }}
       />
-
-<Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
-        }}
-      />
       <Stack.Screen
         name="Pro"
         component={Pro}
@@ -366,6 +349,23 @@ function HomeStack(props) {
             <Header title="Agendamento" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              options
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true
         }}
       />
 

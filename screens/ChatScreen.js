@@ -7,8 +7,6 @@ export default function Chat({route}) {
   const [messages, setMessages] = useState([]);
   const [DATA, setDATA] = useState(null);
 
-  
-
   useLayoutEffect(() => {
 
   

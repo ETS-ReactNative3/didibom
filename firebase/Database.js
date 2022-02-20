@@ -60,7 +60,7 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
   let connectionCollection = await db.collection('connections').get();
 
   connectionCollection.docs.forEach((doc) => {
-    if (doc.data().idConnection == idConnection) {
+    if (doc.data().userId1 == userId1 || doc.data().userId2 == userId2) {
       connections.push({ pending: doc.data().pending });
     }
   });
@@ -74,6 +74,7 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
         userId1: userId1,
         userId2: userId2,
         pending: true,
+        dateOfCon: new Date()
       });
 
     alert("Foi enviado um pedido de conexão!");

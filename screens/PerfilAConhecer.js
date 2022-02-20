@@ -27,17 +27,6 @@ export default function PerfilAConhecer({ route, navigation }) {
   const { userId, name, imgUrl, email } = route.params;
   const [DATA, setDATA] = useState(null);
 
-  const getElements = async () => {
-    try {
-      const info = await getUserInfo();
-      setDATA(info);
-      console.log("no peril" + DATA)
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  }
-
   const conectar = (u) => {
     newConnection(u);
     alert("Pedido de conexão enviado!")

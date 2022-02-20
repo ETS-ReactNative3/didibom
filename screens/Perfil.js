@@ -11,7 +11,7 @@ import {
   View
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { getUserInfo } from "../firebase/Database";
+import { getUserInfo, getNoOfConnections } from "../firebase/Database";
 
 // Alteração para commit
 
@@ -38,6 +38,7 @@ export default function Perfil({ navigation }) {
 
 
   const [DATA, setData] = useState(null);
+  const [noConnections, setNoConnections] = useState(0); 
 
   let pickerResult;
 
@@ -49,7 +50,8 @@ export default function Perfil({ navigation }) {
     try {
       const info = await getUserInfo();
       setData(info);
-      console.log("no peril" + DATA)
+      const noCon = await getNoOfConnections();
+      setNoConnections(noCon);
     } catch (error) {
       console.log(error);
     } finally {
@@ -136,26 +138,6 @@ export default function Perfil({ navigation }) {
                   space="evenly"
                   style={{ marginTop: 20, paddingBottom: 24 }}
                 >
-
-                  <Button
-                    onPress={() => { alert("Hello world") }}
-                    small
-                    style={{ backgroundColor: argonTheme.COLORS.PRIMARY, width: '40%' }}
-                  >
-                    CONECTAR
-                  </Button>
-                  <Button
-
-                    small
-                    style={{ backgroundColor: argonTheme.COLORS.DEFAULT, width: '40%' }}
-                    onPress={() => {
-                      navigation.navigate("Chat", {
-                        userImg: DATA[0].imgUrl
-                      });
-                    }}
-                  >
-                    MENSAGEM
-                  </Button>
                 </Block>
                 <Block row space="between">
                   <Block middle>
@@ -165,7 +147,7 @@ export default function Perfil({ navigation }) {
                       color="#525F7F"
                       style={{ marginBottom: 4 }}
                     >
-
+                      {noConnections}
                     </Text>
                     <Text size={12} color={argonTheme.COLORS.TEXT}>Conexões</Text>
                   </Block>

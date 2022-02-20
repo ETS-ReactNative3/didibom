@@ -8,11 +8,9 @@ import { Block, Text, Button as GaButton, theme } from "galio-framework";
 import { argonTheme, tabs } from "../constants"
 import { Select, Icon, Input, Header, Switch, ModalComponent } from "../components";
 
-
-
 import { Card } from '../components';
 import articles from '../constants/articles';
-import { getRandom } from '../firebase/Database';
+import { getRandom, getNotifications, acceptConnection, rejectConnection } from '../firebase/Database';
 import { View } from 'react-native';
 
 import FontAwesome, {
@@ -24,7 +22,7 @@ import FontAwesome, {
 
 const { width } = Dimensions.get('screen');
 
-export default function Notificacoes() {
+export default function Notificacoes({navigation}) {
 
   const [DATA, setData] = useState(null);
   const [tam, setTam] = useState(0);
@@ -32,7 +30,7 @@ export default function Notificacoes() {
 
   const getElements = async () => {
     try {
-      const info = await getRandom();
+      const info = await getNotifications();
       setData(info);
     } catch (error) {
       console.log(error);
@@ -59,16 +57,21 @@ export default function Notificacoes() {
 
               <Card item={{
                 image: item.imgUrl,
-                type: item.type,
+                type: 1,
                 title: (item.type == 2) ? (item.descricao + "\n\n" + item.name + "\n" + item.localizacao) : item.name,
-                cta: "Convidou você para o Chikata Lounge bara"
+                cta: item.name + " quer se conectar com você"
               }} horizontal />
-              <Button title="Ver convite" color={argonTheme.COLORS.DEFAULT}
-                onPress={() => setOpenModal(true)} />
-
+              <Button title="Aceitar" color={argonTheme.COLORS.DEFAULT}
+                onPress={() => {
+                  acceptConnection(item.userId);
+                  alert("Tu e " + item.name + " estão agora conectados");
+                  navigation.navigate("Home");
+                }} />
+              <Button title="Recusar" color={argonTheme.COLORS.DEFAULT}
+                onPress={() => rejectConnection(item.userId)} />
 
             </TouchableOpacity>
-          )}
+            )}
         />
         )}
       </ScrollView>

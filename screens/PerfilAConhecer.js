@@ -11,7 +11,7 @@ import {
   Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { getUserInfo, newConnection } from "../firebase/Database";
+import { getUserInfo, getNoOfConnections, newConnection } from "../firebase/Database";
 
 import { Button } from "../components";
 import { Images, argonTheme } from "../constants";
@@ -30,6 +30,22 @@ export default function PerfilAConhecer({ route, navigation }) {
     newConnection(u);
     alert("Pedido de conexão enviado!")
   }
+
+  const [noConnections, setNoConnections] = useState(0);
+
+  const getElements = async () => {
+    try {
+      const noCon = await getNoOfConnections(userId);
+      setNoConnections(noCon);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    getElements();
+  }, []);
 
   return (
     <Block flex style={styles.perfil}>
@@ -80,7 +96,7 @@ export default function PerfilAConhecer({ route, navigation }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                    onPress={()=> navigation.navigate('Chat')}
+                    onPress={()=> navigation.navigate('Chat', {userImg: imgUrl})}
                   >
                     MENSAGEM
                   </Button>
@@ -95,9 +111,9 @@ export default function PerfilAConhecer({ route, navigation }) {
                       color="#525F7F"
                       style={{ marginBottom: 4 }}
                     >
-                      0
+                      {noConnections}
                     </Text>
-                    <Text size={12} color={argonTheme.COLORS.TEXT}>Conexões</Text>
+                    <Text size={12} color={argonTheme.COLORS.TEXT}>CONEXÕES</Text>
                   </Block>
                   <Block middle>
                     <Text

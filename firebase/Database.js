@@ -60,7 +60,8 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
   let connectionCollection = await db.collection('connections').get();
 
   connectionCollection.docs.forEach((doc) => {
-    if (doc.data().userId1 == userId1 || doc.data().userId2 == userId2) {
+    if ((doc.data().userId1 == userId1 && doc.data().userId2 == userId2
+    || doc.data().userId1 == userId2 && doc.data().userId2 == userId1)) {
       connections.push({ pending: doc.data().pending });
     }
   });
@@ -87,12 +88,77 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
   }
 }
 
+export async function getNotifications(userId = auth.currentUser.uid) {
+  /* Verificar se existe conexão */
+
+  let ids = [];
+  let notifications = [];
+
+  let connectionCollection = await db.collection('connections').get();
+
+  connectionCollection.docs.forEach(async (doc) => {
+    let equalsUserId2 = doc.data().pending == true && doc.data().userId2 == userId;
+
+    if (equalsUserId2) {
+      ids.push({ user: doc.data().userId1, pending: doc.data().pending });
+    }
+  });
+
+  for (let i = 0; i < ids.length; i++) {
+    let userInfo = await getUserInfo(ids[i].user);
+
+    if (ids[i].pending == true) {
+      notifications.push({ ...userInfo[0], pending: ids[i].pending });
+    }
+  }
+
+  return notifications;
+}
+
+export function acceptConnection(userId1) {
+
+  let userId2 = auth.currentUser.uid;
+
+  let idConnection = userId1 + "" + userId2;
+
+  db.collection('connections').doc(idConnection)
+    .set({
+      idConnection: idConnection,
+      userId1: userId1,
+      userId2: userId2,
+      pending: false,
+      dateOfCon: new Date()
+    });
+}
+
+export async function rejectConnection(userId) {
+
+}
+
+export async function getNoOfConnections(userId = auth.currentUser.uid) {
+
+  let connectionCollection = await db.collection('connections').get();
+  let noConnections = 0;
+
+  connectionCollection.docs.forEach(async (doc) => {
+    let equalsUserId = doc.data().pending == false && (doc.data().userId2 == userId || doc.data().userId1 == userId);
+
+    if (equalsUserId) {
+      noConnections++;
+    }
+  });
+
+  return noConnections;
+}
+
 async function getUserInfo(userId = auth.currentUser.uid) {
   let users = [];
 
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
+
+
 
     if (doc.data().userId == userId) {
       users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1 });

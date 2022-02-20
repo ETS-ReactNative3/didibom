@@ -59,6 +59,15 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.BLACK}
           />
         );
+      case "Notificacoes":
+        return (
+          <Icon
+            name="bell"
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.BLACK}
+          />
+        );
       case "Logout":
         return <Icon
           name="logout"
@@ -108,7 +117,7 @@ class DrawerItem extends React.Component {
               bold={focused ? true : false}
               color={focused ? "white" : "rgba(0,0,0,0.5)"}
             >
-              {title}
+              {(title == "Notificacoes") ? "Notificações" : title }
             </Text>
           </Block>
         </Block>

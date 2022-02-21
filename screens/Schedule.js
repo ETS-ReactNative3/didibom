@@ -12,11 +12,9 @@ import CustomSlider from "../components/CustomSlider";
 
 const { width } = Dimensions.get("screen");
 
-export default function Schedule({ route }) {
+export default function Schedule({ route, navigation }) {
 
-
-  const { navigation } = useNavigation();
-  const { name, imgUrl, imagens } = route.params;
+  const { name, imgUrl, imagens, id } = route.params;
 
   const [dataInPar, setDataInPar] = useState("");
   const [DATA, setData] = useState(null);
@@ -128,8 +126,8 @@ export default function Schedule({ route }) {
 
           </Block>
           <Block center>
-            <Button color='default' style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
-              Convidar Amigos
+            <Button color='default' style={styles.button} onPress={() => { navigation.navigate('ListaAConvidar', {id}) }}>
+              Convidar Conectados
             </Button>
 
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -141,7 +139,7 @@ export default function Schedule({ route }) {
                 Convidados
               </Text>
               <Text>
-                Se não tiver convidados a lista estará vazia
+                Se não tiver convidados a lista estará vazia e serão convidadas pessoas aleatórias
               </Text>
             </Block>
             <Button backgroundColor={argonTheme.COLORS.ICON} style={styles.button} onPress={() => { alert("Agendamento concluído") }}>

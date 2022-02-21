@@ -13,7 +13,6 @@ import Onboarding from "../screens/Onboarding";
 import Pro from "../screens/Pro";
 import Perfil from "../screens/Perfil";
 import Register from "../screens/Register";
-import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
 import CommingSoon from "../screens/CommingSoon";
 import Schedule from "../screens/Schedule";
@@ -29,6 +28,7 @@ import PerfilAConhecer from "../screens/PerfilAConhecer";
 import Notificacoes from "../screens/Notificacoes";
 import Chat from '../screens/ChatScreen';
 import ListaConexoes from '../screens/ListaConexoes';
+import ListaAConvidar from '../screens/ListaAConvidar';
 
 
 // drawer
@@ -387,6 +387,17 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="ListaConexoes" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+
+      <Stack.Screen
+        name="ListaAConvidar"
+        component={ListaAConvidar}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="ListaAConvidar" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}

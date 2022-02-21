@@ -88,31 +88,89 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
   }
 }
 
+export function newInvite(idRestaurante, userId2, userId1 = auth.currentUser.uid) {
+
+  let idInvite = userId1 + "" + userId2 + "" + idRestaurante;
+
+  db.collection('invites').doc(idInvite)
+    .set({
+      idInvite: idInvite,
+      idRestaurante: idRestaurante,
+      userId1: userId1,
+      userId2: userId2,
+      pending: true,
+      dateOfCon: new Date()
+    });
+
+    alert("Convite enviado!");
+}
+
 export async function getNotifications(userId = auth.currentUser.uid) {
   /* Verificar se existe conexão */
 
-  let ids = [];
+  let ids1 = [];
+  let ids2 = [];
   let notifications = [];
 
   let connectionCollection = await db.collection('connections').get();
+  let inviteCollection = await db.collection('invites').get();
 
   connectionCollection.docs.forEach(async (doc) => {
     let equalsUserId2 = doc.data().pending == true && doc.data().userId2 == userId;
 
     if (equalsUserId2) {
-      ids.push({ user: doc.data().userId1, pending: doc.data().pending });
+      ids1.push({ user: doc.data().userId1, pending: doc.data().pending });
     }
   });
 
-  for (let i = 0; i < ids.length; i++) {
-    let userInfo = await getUserInfo(ids[i].user);
+  inviteCollection.docs.forEach(async (doc) => {
+    let equalsUserId2 = doc.data().pending == true && doc.data().userId2 == userId;
 
-    if (ids[i].pending == true) {
-      notifications.push({ ...userInfo[0], pending: ids[i].pending });
+    if (equalsUserId2) {
+      ids2.push({ user: doc.data().userId1, restaurant: doc.data().idRestaurante, pending: doc.data().pending });
+    }
+  });
+
+  for (let i = 0; i < ids1.length; i++) {
+    let userInfo = await getUserInfo(ids1[i].user);
+
+    if (ids1[i].pending == true) {
+      notifications.push({ user: {...userInfo[0]}, pending: ids1[i].pending, typeNotification: 1 });
+    }
+  }
+
+  for (let i = 0; i < ids2.length; i++) {
+    let userInfo = await getUserInfo(ids2[i].user);
+    let restaurantInfo = await getRestaurantInfo(ids2[i].restaurant);
+
+    if (ids2[i].pending == true) {
+      notifications.push({
+        user: {...userInfo[0]},
+        restaurant: {...restaurantInfo[0]},
+        pending: ids2[i].pending,
+        typeNotification: 2
+      });
     }
   }
 
   return notifications;
+}
+
+export function acceptInvite(userId1, idRestaurante) {
+
+  let userId2 = auth.currentUser.uid;
+
+  let idInvite = userId1 + "" + userId2 + "" + idRestaurante;
+
+  db.collection('invites').doc(idInvite)
+  .set({
+    idInvite: idInvite,
+    idRestaurante: idRestaurante,
+    userId1: userId1,
+    userId2: userId2,
+    pending: false,
+    dateOfCon: new Date()
+  });
 }
 
 export function acceptConnection(userId1) {
@@ -157,15 +215,34 @@ async function getUserInfo(userId = auth.currentUser.uid) {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-
-
-
     if (doc.data().userId == userId) {
       users.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, userId: doc.data().userId, type: 1 });
     }
   });
 
   return users;
+}
+
+async function getRestaurantInfo(idRestaurante) {
+  let restaurants = [];
+
+  let restaurantCollection = await db.collection('restaurantes').get();
+
+  restaurantCollection.docs.forEach((doc) => {
+    if (doc.data().id == idRestaurante) {
+      restaurants.push({
+        imgUrl: doc.data().imgs[0],
+        imagens: doc.data().imgs.slice(1),
+        name: doc.data().nome,
+        descricao: doc.data().descricao,
+        localizacao: doc.data().localizacao,
+        id: doc.data().id,
+        type: 2
+      });
+    }
+  });
+
+  return restaurants;
 }
 
 async function getAllUsers() {
@@ -190,8 +267,6 @@ export async function getConnections(userId = auth.currentUser.uid) {
 
   connectionCollection.docs.forEach(async (doc) => {
     let equalsUserId = doc.data().pending == false && (doc.data().userId2 == userId || doc.data().userId1 == userId);
-
-    console.log(doc.data());
 
     if (equalsUserId) {
       console.log(doc.data());
@@ -220,6 +295,7 @@ async function getAllRestaurants() {
       name: doc.data().nome,
       descricao: doc.data().descricao,
       localizacao: doc.data().localizacao,
+      id: doc.data().id,
       type: 2
     });
   });
@@ -245,6 +321,7 @@ async function getRandom() {
       name: doc.data().nome,
       descricao: doc.data().descricao,
       localizacao: doc.data().localizacao,
+      id: doc.data().id,
       type: 2
     });
   });
@@ -283,6 +360,7 @@ async function getRandomItem() {
       name: doc.data().nome,
       descricao: doc.data().descricao,
       localizacao: doc.data().localizacao,
+      id: doc.data().id,
       type: 2
     });
   });

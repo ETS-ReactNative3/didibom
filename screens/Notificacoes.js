@@ -10,7 +10,7 @@ import { Select, Icon, Input, Header, Switch, ModalComponent } from "../componen
 
 import { Card } from '../components';
 import articles from '../constants/articles';
-import { getRandom, getNotifications, acceptConnection, rejectConnection } from '../firebase/Database';
+import { getRandom, getNotifications, acceptConnection, rejectConnection, acceptInvite } from '../firebase/Database';
 import { View } from 'react-native';
 
 import FontAwesome, {
@@ -56,19 +56,27 @@ export default function Notificacoes({navigation}) {
             >
 
               <Card item={{
-                image: item.imgUrl,
+                image: (item.typeOfNotification == 1) ? item.user.imgUrl : item.restaurant.imgUrl,
                 type: 1,
                 title: (item.type == 2) ? (item.descricao + "\n\n" + item.name + "\n" + item.localizacao) : item.name,
-                cta: item.name + " quer se conectar com você"
+                cta: (item.typeOfNotification == 1) ?
+                      item.user.name + " quer se conectar com você" :
+                      item.user.name + " convidou você para " + item.restaurant.name,
               }} horizontal />
               <Button title="Aceitar" color={argonTheme.COLORS.DEFAULT}
                 onPress={() => {
-                  acceptConnection(item.userId);
-                  alert("Tu e " + item.name + " estão agora conectados");
+                  if (item.typeOfNotification == 1) {
+                    acceptConnection(item.user.userId);
+                    alert("Tu e " + item.user.name + " estão agora conectados");
+                  } else {
+                    acceptInvite(item.user.userId, item.restaurant.id);
+                    alert("Vai para o restaurante!");
+                  }
+              
                   navigation.navigate("Home");
                 }} />
               <Button title="Recusar" color={argonTheme.COLORS.DEFAULT}
-                onPress={() => rejectConnection(item.userId)} />
+                onPress={() => rejectConnection(item.user.userId)} />
 
             </TouchableOpacity>
             )}

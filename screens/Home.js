@@ -40,6 +40,7 @@ export default function Home() {
                 type: item.type,
                 title: (item.type == 2) ? (item.descricao + "\n\n" + item.name + "\n" + item.localizacao) : item.name,
                 userId: item.userId,
+                id: item.id,
                 cta: "Conhecer"
               }} horizontal />
             )}

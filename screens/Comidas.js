@@ -41,7 +41,10 @@ export default function Comidas() {
                 image: item.imgUrl,
                 imagens: item.imagens,
                 title: (item.descricao + "\n\n" + item.name + "\n" + item.localizacao),
-                cta: "Conhecer", type: item.type}} horizontal />
+                cta: "Conhecer",
+                type: item.type,
+                id: item.id,
+              }} horizontal />
             )}
           />
           )}

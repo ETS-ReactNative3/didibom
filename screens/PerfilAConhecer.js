@@ -75,7 +75,6 @@ export default function PerfilAConhecer({ route, navigation }) {
                   space="evenly"
                   style={{ marginTop: 20, paddingBottom: 24 }}
                 >
-
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
@@ -85,6 +84,26 @@ export default function PerfilAConhecer({ route, navigation }) {
                   >
                     CONECTAR
                   </Button>
+
+                  <Button
+                    small
+                    style={{ backgroundColor: argonTheme.COLORS.PRIMARY }}
+                    onPress={async () => {
+                      navigation.navigate('ListaConexoes', {userId, name, imgUrl, email});
+                    }}
+                  >
+                    VER CONEXÕES
+                  </Button>
+                </Block>
+
+              </Block>
+              <Block style={styles.info}>
+                <Block
+                  middle
+                  row
+                  space="evenly"
+                  style={{ marginTop: -25, paddingBottom: 0 }}
+                >
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
@@ -97,10 +116,17 @@ export default function PerfilAConhecer({ route, navigation }) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                    onPress={()=> navigation.navigate('Chat', {userImg: imgUrl})}
+                    onPress={() => navigation.navigate('Chat', { userImg: imgUrl })}
                   >
                     MENSAGEM
                   </Button>
+                </Block>
+                <Block
+                  middle
+                  row
+                  space="evenly"
+                  style={{ marginTop: 20, paddingBottom: 24 }}
+                >
 
 
                 </Block>

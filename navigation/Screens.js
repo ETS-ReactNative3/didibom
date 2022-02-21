@@ -27,7 +27,8 @@ import ThirdStep from "../screens/ThirdStep";
 import CameraPhotoPerfil from "../components/Camera";
 import PerfilAConhecer from "../screens/PerfilAConhecer";
 import Notificacoes from "../screens/Notificacoes";
-import Chat from '../screens/ChatScreen'
+import Chat from '../screens/ChatScreen';
+import ListaConexoes from '../screens/ListaConexoes';
 
 
 // drawer
@@ -375,6 +376,17 @@ function HomeStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Notificacoes" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+
+      <Stack.Screen
+        name="ListaConexoes"
+        component={ListaConexoes}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="ListaConexoes" navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}

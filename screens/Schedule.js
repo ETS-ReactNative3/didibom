@@ -1,5 +1,5 @@
-import React, { useState, shouldComponentUpdate } from "react";
-import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Modal, Pressable, View, ImageBackground } from "react-native";
+import React, { useState, useEffect, shouldComponentUpdate } from "react";
+import { ScrollView, StyleSheet, Dimensions, FlatList } from "react-native";
 // Galio components
 import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
@@ -7,25 +7,16 @@ import { argonTheme, tabs } from "../constants";
 import { Button, Select, Icon, Input, Header, Switch, Card, ModalComponent } from "../components";
 
 import { useNavigation } from "@react-navigation/native";
-import {getRandomPeople} from "../firebase/Database";
-
-import articles from '../constants/articles';
-import data from "../assets/data";
+import { getRandomPeople } from "../firebase/Database";
 import CustomSlider from "../components/CustomSlider";
 
 const { width } = Dimensions.get("screen");
-
-
 
 export default function Schedule({ route }) {
 
 
   const { navigation } = useNavigation();
   const { name, imgUrl, imagens } = route.params;
-
-  useEffect(() => {
-    console.log(imagens);
-  }, []);
 
   const [dataInPar, setDataInPar] = useState("");
   const [DATA, setData] = useState(null);
@@ -76,10 +67,10 @@ export default function Schedule({ route }) {
 
             <Block card={true} borderless={true} title="Nossos Preços" style={{ backgroundColor: 'white', padding: 10, paddingTop: 20 }} shadow={true}
             >
-              
-              
-              <Text p style={{marginBottom: 15}}>Abertos agora ✅ </Text>
-              <Text p style={{marginBottom: 5}}>seg - sex: 8h-22h</Text>
+
+
+              <Text p style={{ marginBottom: 15 }}>Abertos agora ✅ </Text>
+              <Text p style={{ marginBottom: 5 }}>seg - sex: 8h-22h</Text>
               <Text p>sab - dom: 8h-00h</Text>
 
             </Block>
@@ -101,14 +92,14 @@ export default function Schedule({ route }) {
           <Block row space="evenly"
             style={{ flex: 1, flexDirection: 'row' }}
           >
-            <Block 
+            <Block
               flex row center alignItems={'center'} justifyContent={'center'}
               marginHorizontal={theme.SIZES.BASE}
-               style={{ paddingHorizontal: theme.SIZES.BASE}}>
+              style={{ paddingHorizontal: theme.SIZES.BASE }}>
 
               <Select
                 marginRight={50}
-                style={{paddingTop: 14, paddingBottom: 14}}
+                style={{ paddingTop: 14, paddingBottom: 14 }}
                 defaultIndex={1}
                 options={["1", "2", "3", "4", "5", "6"]}
                 onValueChange={(num) => {
@@ -140,6 +131,19 @@ export default function Schedule({ route }) {
             <Button color='default' style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
               Convidar Amigos
             </Button>
+
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Text
+                h3
+                style={{ marginBottom: theme.SIZES.BASE - 10, marginTop: theme.SIZES.BASE }}
+                color={argonTheme.COLORS.DEFAULT}
+              >
+                Convidados
+              </Text>
+              <Text>
+                Se não tiver convidados a lista estará vazia
+              </Text>
+            </Block>
             <Button backgroundColor={argonTheme.COLORS.ICON} style={styles.button} onPress={() => { alert("Agendamento concluído") }}>
               Concluir Agendamento
             </Button>
@@ -151,15 +155,6 @@ export default function Schedule({ route }) {
 
         <Block flex style={styles.group}>
           <Block>
-            {(<FlatList
-              data={DATA}
-              renderItem={({ item }) => (
-                <Text style={{alignItems: 'center', justifyContent: 'center', alignSelf: 'center'}}>
-                  {item.name}
-                </Text>
-              )}
-            />
-            )}
           </Block>
           <Text bold size={16} style={styles.title}>
             Social

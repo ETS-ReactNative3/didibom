@@ -61,7 +61,7 @@ export async function newConnection(userId2, userId1 = auth.currentUser.uid) {
 
   connectionCollection.docs.forEach((doc) => {
     if ((doc.data().userId1 == userId1 && doc.data().userId2 == userId2
-    || doc.data().userId1 == userId2 && doc.data().userId2 == userId1)) {
+      || doc.data().userId1 == userId2 && doc.data().userId2 == userId1)) {
       connections.push({ pending: doc.data().pending });
     }
   });
@@ -180,6 +180,34 @@ async function getAllUsers() {
   return users;
 }
 
+export async function getConnections(userId = auth.currentUser.uid) {
+  /* Verificar se existe conexão */
+
+  let ids = [];
+  let connections = [];
+
+  let connectionCollection = await db.collection('connections').get();
+
+  connectionCollection.docs.forEach(async (doc) => {
+    let equalsUserId = doc.data().pending == false && (doc.data().userId2 == userId || doc.data().userId1 == userId);
+
+    console.log(doc.data());
+
+    if (equalsUserId) {
+      console.log(doc.data());
+      ids.push({ user: (doc.data().userId1 != userId) ? doc.data().userId1 : doc.data().userId2 });
+    }
+  });
+
+  for (let i = 0; i < ids.length; i++) {
+    let userInfo = await getUserInfo(ids[i].user);
+
+    connections.push({ ...userInfo[0] });
+  }
+
+  return connections;
+}
+
 async function getAllRestaurants() {
   let restaurants = [];
 
@@ -244,7 +272,7 @@ async function getRandomItem() {
   let userCollection = await db.collection('users').get();
 
   userCollection.docs.forEach((doc) => {
-    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email });
+    all.push({ imgUrl: doc.data().imgUrl, name: doc.data().name, type: 1, email: doc.data().email, userId: doc.data().userId });
   });
 
   let restaurantCollection = await db.collection('restaurantes').get();
@@ -290,5 +318,7 @@ async function getRandomPeople(x) {
 
   return finalVet;
 }
+
+
 
 export { db, auth, newUser, getUserInfo, getAllUsers, getAllRestaurants, getRandom, getRandomPeople, getRandomItem };
